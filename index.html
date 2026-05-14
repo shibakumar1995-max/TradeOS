@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Niyam TradeOS</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#07070F;font-family:'Syne',sans-serif;color:#F2F2FF;max-width:480px;margin:0 auto;}
+::-webkit-scrollbar{display:none;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.spin{animation:spin 1s linear infinite;display:inline-block;}
+input[type=range]{-webkit-appearance:none;height:4px;border-radius:2px;background:#1C1C36;outline:none;width:100%;margin:4px 0;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:9px;background:#6D44FF;cursor:pointer;}
+input,textarea{font-family:'Syne',sans-serif;}button{font-family:'Syne',sans-serif;}
+.card{background:#0D0D1E;border:1px solid rgba(109,68,255,0.20);border-radius:16px;padding:20px;margin-bottom:14px;}
+.statbox{background:#141428;border-radius:12px;padding:14px 16px;border:1px solid rgba(109,68,255,0.20);}
+.chip{padding:6px 14px;border-radius:20px;border:1px solid rgba(109,68,255,0.20);background:transparent;color:#7A7A9A;font-size:13px;cursor:pointer;font-family:'Syne',sans-serif;margin:3px;transition:all 0.15s;}
+.chip.active{border-color:#6D44FF;background:rgba(109,68,255,0.13);color:#9D7FFF;}
+.chip.green.active{border-color:#0EBF8A;background:rgba(14,191,138,0.13);color:#0EBF8A;}
+.chip.red.active{border-color:#FF3D5A;background:rgba(255,61,90,0.13);color:#FF3D5A;}
+.chip.amber.active{border-color:#FFB020;background:rgba(255,176,32,0.13);color:#FFB020;}
+.badge{background:rgba(0,0,0,0.2);border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;font-family:'DM Mono',monospace;display:inline-block;margin:2px;}
+.scale-btn{width:32px;height:32px;border-radius:8px;background:#141428;border:1px solid rgba(109,68,255,0.20);color:#7A7A9A;cursor:pointer;font-family:'DM Mono',monospace;font-size:13px;margin:3px;}
+.scale-btn.active{background:#6D44FF;border-color:#6D44FF;color:#fff;}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#0D0D1E;border-top:1px solid rgba(109,68,255,0.20);display:flex;z-index:100;padding:8px 0 14px;}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;cursor:pointer;color:#7A7A9A;padding:4px 2px;font-size:9px;font-family:'Syne',sans-serif;font-weight:400;}
+.nav-btn.active{color:#9D7FFF;font-weight:700;}
+.nav-dot{width:4px;height:4px;border-radius:2px;background:#6D44FF;}
+.screen{padding:20px 16px 100px;min-height:100vh;}
+.toggle{width:44px;height:24px;border-radius:12px;position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0;border:1px solid;}
+.toggle-thumb{width:18px;height:18px;border-radius:9px;background:#F2F2FF;position:absolute;top:2px;transition:left 0.2s;}
+.btn-primary{width:100%;padding:14px;background:#6D44FF;border:none;border-radius:14px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;}
+.btn-primary:disabled{background:#1C1C36;color:#7A7A9A;cursor:not-allowed;}
+.btn-primary.saved{background:#0EBF8A;}
+.section-label{font-size:15px;font-weight:600;color:#F2F2FF;margin-bottom:10px;}
+.section-label span{color:#9D7FFF;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const T={bg:"#07070F",s1:"#0D0D1E",s2:"#141428",s3:"#1C1C36",brd:"rgba(109,68,255,0.20)",pur:"#6D44FF",purL:"#9D7FFF",grn:"#0EBF8A",red:"#FF3D5A",amb:"#FFB020",tp:"#F2F2FF",ts:"#7A7A9A",tm:"#363652"};
+
+// Calls our Netlify Function (runs server-side, no CORS)
+async function dhanCall(endpoint, body){
+  const url = `/.netlify/functions/dhan?endpoint=${encodeURIComponent(endpoint)}`;
+  const opts = body
+    ? {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)}
+    : {method:"GET"};
+  const res = await fetch(url, opts);
+  const data = await res.json();
+  if(data.error) throw new Error(data.error);
+  if(data.errorCode) throw new Error(`${data.errorCode}: ${data.errorMessage}`);
+  return data;
+}
+
+function calcBehavior(trades){
+  if(!trades.length) return{total:0,riskControl:0,discipline:0,consistency:0,execQuality:0,winRatio:0};
+  const withSL=trades.filter(t=>t.sl&&t.sl>0).length;
+  const graded=trades.filter(t=>["A","B","B+"].includes(t.grade)).length;
+  const wins=trades.filter(t=>t.pnl>0).length;
+  const avgConf=trades.reduce((a,t)=>a+(t.confidence||5),0)/trades.length;
+  const journaled=trades.filter(t=>t.lesson).length;
+  const riskControl=Math.round((withSL/trades.length)*100);
+  const discipline=Math.round((graded/trades.length)*100);
+  const consistency=Math.min(100,Math.round((journaled/trades.length)*100));
+  const execQuality=Math.round(avgConf*10);
+  const winRatio=Math.round((wins/trades.length)*100);
+  const total=Math.round(riskControl*0.30+discipline*0.25+consistency*0.20+execQuality*0.15+winRatio*0.10);
+  return{total,riskControl,discipline,consistency,execQuality,winRatio};
+}
+
+const fmt={pnl:(v)=>`${v>=0?"+":""}₹${Math.abs(v).toLocaleString("en-IN")}`,inr:(v)=>`₹${Number(v).toLocaleString("en-IN")}`,pct:(v)=>`${v>=0?"+":""}${Number(v).toFixed(1)}%`};
+const pnlColor=(v)=>v>=0?T.grn:T.red;
+const scoreColor=(s)=>s>=70?T.grn:s>=45?T.amb:T.red;
+const gradeColor=(g)=>["A","A+"].includes(g)?T.grn:["B","B+"].includes(g)?T.amb:T.red;
+
+function loadTrades(){try{const s=localStorage.getItem('nt');return s?JSON.parse(s):[];}catch{return[];}}
+function loadFund(){try{const s=localStorage.getItem('nf');return s?JSON.parse(s):null;}catch{return null;}}
+
+let state={screen:"dashboard",trades:loadTrades(),fund:loadFund(),syncing:false,syncMsg:"",testStatus:null,filter:"All",journal:{exitType:"",setup:"",outcome:"",confidence:5,satisfaction:5,emotion:"",mistakes:[],lesson:""},journalSaved:false,connected:false};
+
+function setState(p){Object.assign(state,p);render();}
+
+function render(){
+  document.getElementById('app').innerHTML=`<div style="background:${T.bg};min-height:100vh;color:${T.tp};font-family:'Syne',sans-serif;max-width:480px;margin:0 auto;">${renderScreen()}${renderNav()}</div>`;
+  attachEvents();
+}
+
+function renderNav(){
+  const tabs=[{id:"dashboard",icon:"🏠",label:"Home"},{id:"journal",icon:"📓",label:"Journal"},{id:"analytics",icon:"📊",label:"Analytics"},{id:"trades",icon:"📋",label:"Trades"},{id:"settings",icon:"⚙️",label:"Settings"}];
+  return`<div class="nav">${tabs.map(t=>`<button class="nav-btn ${state.screen===t.id?'active':''}" onclick="go('${t.id}')"><span style="font-size:18px">${t.icon}</span>${t.label}${state.screen===t.id?'<div class="nav-dot"></div>':''}</button>`).join('')}</div>`;
+}
+function renderScreen(){switch(state.screen){case"dashboard":return renderDashboard();case"journal":return renderJournal();case"analytics":return renderAnalytics();case"trades":return renderTrades();case"settings":return renderSettings();}}
+
+function MiniLine(data){if(!data||data.length<2)return'';const w=320,h=60,pad=8,min=Math.min(...data),max=Math.max(...data),range=max-min||1;const pts=data.map((v,i)=>`${pad+(i/(data.length-1))*(w-pad*2)},${pad+((max-v)/range)*(h-pad*2)}`).join(" ");return`<svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${T.purL}" stroke-width="2" stroke-linejoin="round"/></svg>`;}
+function MBar(label,weight,value){const c=scoreColor(value);return`<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:12px;color:${T.ts}">${label} <span style="color:${T.tm}">(${weight}%)</span></span><span style="font-size:12px;color:${c};font-family:DM Mono,monospace;font-weight:600">${value}%</span></div><div style="height:5px;background:${T.s3};border-radius:3px;overflow:hidden"><div style="height:100%;width:${value}%;background:${c};border-radius:3px"></div></div></div>`;}
+function Ring(score){const r=44,circ=2*Math.PI*r,dash=(score/100)*circ,c=scoreColor(score);return`<div style="position:relative;width:100px;height:100px;flex-shrink:0"><svg width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="${r}" fill="none" stroke="${T.s3}" stroke-width="8"/><circle cx="50" cy="50" r="${r}" fill="none" stroke="${c}" stroke-width="8" stroke-dasharray="${dash} ${circ}" stroke-linecap="round" transform="rotate(-90 50 50)"/></svg><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><span style="font-size:20px;font-weight:700;color:${c};font-family:DM Mono,monospace">${score}%</span></div></div>`;}
+function Bdg(t,c){return`<span class="badge" style="background:${c}22;color:${c};border:1px solid ${c}44">${t}</span>`;}
+function SBox(label,value,color){return`<div class="statbox"><div style="font-size:10px;color:${T.ts};margin-bottom:4px;text-transform:uppercase;letter-spacing:0.07em">${label}</div><div style="font-size:17px;font-weight:700;font-family:DM Mono,monospace;color:${color||T.tp}">${value}</div></div>`;}
+
+function renderDashboard(){
+  const beh=calcBehavior(state.trades);
+  const totalPnL=state.trades.reduce((a,t)=>a+t.pnl,0);
+  const equity=parseFloat(state.fund?.availabelBalance||0);
+  const riskBadgeColor=beh.total>=70?T.grn:beh.total>=45?T.amb:T.red;
+  const riskLabel=beh.total>=70?"Risk Safe":beh.total>=45?"Caution":"High Risk";
+  const equityData=state.trades.length>1?state.trades.slice().reverse().map((_,i,arr)=>arr.slice(0,i+1).reduce((s,t)=>s+t.pnl,equity)):[];
+  return`<div class="screen">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px">
+      <div><div style="font-size:10px;color:${T.ts};letter-spacing:0.12em;text-transform:uppercase;margin-bottom:2px">Niyam TradeOS</div><div style="font-size:22px;font-weight:700">Dashboard</div></div>
+      <button onclick="syncDhan()" style="display:flex;align-items:center;gap:6px;background:${T.pur};border:none;border-radius:10px;color:#fff;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Syne',sans-serif;opacity:${state.syncing?0.7:1}">
+        <span class="${state.syncing?'spin':''}" style="display:inline-block">↻</span>${state.syncing?"Syncing…":"Sync Dhan"}
+      </button>
+    </div>
+    ${state.syncMsg?`<div style="padding:12px 16px;border-radius:10px;margin-bottom:14px;font-size:13px;background:${state.syncMsg.startsWith("✓")?T.grn+"15":T.red+"15"};color:${state.syncMsg.startsWith("✓")?T.grn:T.red};border:1px solid ${state.syncMsg.startsWith("✓")?T.grn:T.red}33">${state.syncMsg}</div>`:""}
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <span style="font-size:15px;font-weight:700">Today's Status</span>
+        ${Bdg(state.fund?"Live":"Not Synced",state.fund?T.grn:T.ts)}
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        ${SBox("Trades Today",""+state.trades.length)}
+        ${SBox("Daily Loss Limit",state.fund?fmt.inr(state.fund.sodLimit||0):"—")}
+        ${SBox("Closed P&L",fmt.pnl(totalPnL),pnlColor(totalPnL))}
+        ${SBox("Available",state.fund?fmt.inr(state.fund.availabelBalance||0):"—")}
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <span style="font-size:15px;font-weight:700">Behavioural Evaluation</span>
+        ${Bdg(riskLabel,riskBadgeColor)}
+      </div>
+      <div style="display:flex;gap:16px;align-items:center">${Ring(beh.total)}<div style="flex:1">${MBar("Risk Control",30,beh.riskControl)}${MBar("Discipline",25,beh.discipline)}${MBar("Consistency",20,beh.consistency)}${MBar("Exec Quality",15,beh.execQuality)}${MBar("Win Ratio",10,beh.winRatio)}</div></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><div style="font-size:15px;font-weight:700;margin-bottom:4px">🏆 Performance</div><div style="font-size:13px;color:${T.ts}">Wins: <span style="color:${T.grn};font-weight:600">${state.trades.filter(t=>t.pnl>0).length}</span> &nbsp; Losses: <span style="color:${T.red};font-weight:600">${state.trades.filter(t=>t.pnl<0).length}</span></div></div>
+        <div style="text-align:right"><div style="font-size:10px;color:${T.ts};margin-bottom:4px">TOTAL</div><div style="font-size:28px;font-weight:700;color:${T.purL};font-family:DM Mono,monospace">${state.trades.length}</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:700;margin-bottom:14px">Account Summary</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        ${SBox("Available Funds",state.fund?fmt.inr(state.fund.availabelBalance||0):"—")}
+        ${SBox("Used Margin",state.fund?fmt.inr(state.fund.utilizedAmount||0):"—")}
+        ${SBox("Closed P&L",fmt.pnl(totalPnL),pnlColor(totalPnL))}
+        ${SBox("SOD Limit",state.fund?fmt.inr(state.fund.sodLimit||0):"—")}
+      </div>
+    </div>
+    ${equityData.length>1?`<div class="card"><div style="font-size:12px;font-weight:600;color:${T.ts};margin-bottom:10px">P&L Curve</div>${MiniLine(equityData)}</div>`:""}
+  </div>`;
+}
+
+function renderJournal(){
+  const j=state.journal;
+  const canSave=j.exitType&&j.setup&&j.outcome&&j.emotion;
+  const emoColor=(e)=>e==="Calm"?"green active":["Frustrated","Overconfident","Revenge"].includes(e)?"red active":"amber active";
+  const scale=(key)=>[1,2,3,4,5,6,7,8,9,10].map(n=>`<button class="scale-btn${j[key]===n?' active':''}" onclick="jscale('${key}',${n})">${n}</button>`).join('');
+  return`<div class="screen">
+    <div style="font-size:22px;font-weight:700;margin-bottom:4px">Trade Journal</div>
+    <div style="font-size:13px;color:${T.ts};margin-bottom:24px">Reflect on your trade to improve.</div>
+    <div class="card"><div class="section-label"><span>1. </span>How did you exit?</div><div>${["Target Hit","Stop Loss Hit","Manual Exit"].map(e=>`<button class="chip${j.exitType===e?' active':''}" onclick="jset('exitType','${e}')">${e}</button>`).join('')}</div></div>
+    <div class="card"><div class="section-label"><span>2. </span>Why did you take this trade?</div><div>${["Breakout","Pullback","Trend Following","Reversal","Scalping","ORB","VWAP Rejection","Random","Emotional"].map(s=>`<button class="chip${j.setup===s?(["Random","Emotional"].includes(s)?' red active':' active'):''}" onclick="jset('setup','${s}')">${s}</button>`).join('')}</div></div>
+    <div class="card"><div class="section-label"><span>3. </span>How did the trade go?</div><div>${[["Full Success","green"],["Partial Success","amber"],["Followed Plan","amber"],["Mistake","red"]].map(([lbl,cl])=>`<button class="chip${j.outcome===lbl?' '+cl+' active':''}" onclick="jset('outcome','${lbl}')">${lbl}</button>`).join('')}</div></div>
+    <div class="card"><div class="section-label"><span>4. </span>Confidence at entry? (1–10)</div><div style="display:flex;flex-wrap:wrap">${scale("confidence")}</div></div>
+    <div class="card"><div class="section-label"><span>5. </span>How satisfied are you? (1–10)</div><div style="display:flex;flex-wrap:wrap">${scale("satisfaction")}</div></div>
+    <div class="card"><div class="section-label"><span>6. </span>Emotional state?</div><div>${["Calm","Frustrated","Overconfident","Impatient","Anxious","Revenge"].map(e=>`<button class="chip${j.emotion===e?' '+emoColor(e):''}" onclick="jset('emotion','${e}')">${e}</button>`).join('')}</div></div>
+    <div class="card"><div class="section-label"><span>7. </span>What went wrong?</div><div>${["Overtrading","Revenge Trading","Exited Too Early","Exited Too Late","FOMO Entry","No Clear Plan","No Mistake"].map(m=>`<button class="chip${j.mistakes.includes(m)?(m==='No Mistake'?' green active':' red active'):''}" onclick="jtoggle('${m}')">${m}</button>`).join('')}</div></div>
+    <div class="card"><div class="section-label"><span>8. </span>What did you learn?</div><textarea id="jlesson" placeholder="Write your lesson from this trade…" style="width:100%;min-height:90px;background:${T.s2};border:1px solid ${T.brd};border-radius:10px;color:${T.tp};padding:10px 12px;font-size:14px;resize:vertical;box-sizing:border-box">${j.lesson}</textarea></div>
+    <button class="btn-primary${state.journalSaved?' saved':''}" onclick="saveJournal()" ${!canSave?"disabled":""}>${state.journalSaved?"✓ Saved!":"Save Journal Entry"}</button>
+  </div>`;
+}
+
+function renderAnalytics(){
+  const t=state.trades;
+  if(!t.length) return`<div class="screen"><div style="font-size:22px;font-weight:700;margin-bottom:24px">Analytics</div><div style="text-align:center;padding:60px 20px;color:${T.ts}"><div style="font-size:48px;margin-bottom:16px">📊</div><div style="font-size:16px;font-weight:700;color:${T.tp};margin-bottom:8px">No Data Yet</div><div style="font-size:13px">Tap Sync Dhan on the Home screen to load your trades.</div><button onclick="go('dashboard')" style="margin-top:20px;padding:12px 24px;background:${T.pur};border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:'Syne',sans-serif">Go to Dashboard</button></div></div>`;
+  const totalPnL=t.reduce((a,x)=>a+x.pnl,0),wins=t.filter(x=>x.pnl>0),losses=t.filter(x=>x.pnl<0);
+  const wr=Math.round((wins.length/t.length)*100),avgWin=wins.length?wins.reduce((a,x)=>a+x.pnl,0)/wins.length:0,avgLoss=losses.length?Math.abs(losses.reduce((a,x)=>a+x.pnl,0)/losses.length):1;
+  const rr=(avgWin/avgLoss).toFixed(2),pf=losses.length?(avgWin*wins.length/(avgLoss*losses.length)).toFixed(2):"∞",beh=calcBehavior(t);
+  const symbols=[...new Set(t.map(x=>x.symbol.split(" ")[0]))].slice(0,7);
+  const symStats=symbols.map(s=>{const tr=t.filter(x=>x.symbol.startsWith(s));const w=tr.filter(x=>x.pnl>0).length;return{s,wr:Math.round((w/tr.length)*100)};});
+  const emotionData=["Calm","Frustrated","Overconfident","Anxious","Impatient","Revenge"].map(e=>({e:e.slice(0,5),c:t.filter(x=>x.emotion===e).length})).filter(x=>x.c>0);
+  const maxE=Math.max(...emotionData.map(x=>x.c),1);
+  return`<div class="screen">
+    <div style="font-size:22px;font-weight:700;margin-bottom:24px">Analytics</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">${SBox("Total P&L",fmt.pnl(totalPnL),pnlColor(totalPnL))}${SBox("Win Rate",`${wr}%`,wr>=60?T.grn:T.amb)}${SBox("Avg R:R",rr,parseFloat(rr)>=1.5?T.grn:T.amb)}${SBox("Profit Factor",pf,parseFloat(pf)>=1.5?T.grn:T.amb)}</div>
+    ${symStats.length?`<div class="card"><div style="font-size:12px;font-weight:600;color:${T.ts};margin-bottom:14px">Symbol Win Rate</div>${symStats.map(s=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="width:60px;font-size:10px;color:${T.ts};text-align:right">${s.s}</div><div style="flex:1;height:18px;background:${T.s3};border-radius:4px;overflow:hidden"><div style="height:100%;width:${s.wr}%;background:${s.wr>=70?T.grn:s.wr>=50?T.amb:T.red};border-radius:4px"></div></div><div style="width:32px;font-size:11px;color:${T.purL};font-family:DM Mono,monospace">${s.wr}%</div></div>`).join('')}</div>`:""}
+    <div class="card"><div style="font-size:12px;font-weight:600;color:${T.ts};margin-bottom:14px">Behaviour Score</div>${MBar("Risk Control",30,beh.riskControl)}${MBar("Discipline",25,beh.discipline)}${MBar("Consistency",20,beh.consistency)}${MBar("Exec Quality",15,beh.execQuality)}${MBar("Win Ratio",10,beh.winRatio)}</div>
+    ${emotionData.length?`<div class="card"><div style="font-size:12px;font-weight:600;color:${T.ts};margin-bottom:12px">Emotional Frequency</div>${emotionData.map(x=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="width:40px;font-size:10px;color:${T.ts}">${x.e}</div><div style="flex:1;height:18px;background:${T.s3};border-radius:4px;overflow:hidden"><div style="height:100%;width:${(x.c/maxE)*100}%;background:${T.purL};border-radius:4px"></div></div><div style="width:20px;font-size:11px;color:${T.purL};font-family:DM Mono,monospace">${x.c}</div></div>`).join('')}</div>`:""}
+  </div>`;
+}
+
+function renderTrades(){
+  if(!state.trades.length) return`<div class="screen"><div style="font-size:22px;font-weight:700;margin-bottom:20px">Trade History</div><div style="text-align:center;padding:60px 20px;color:${T.ts}"><div style="font-size:48px;margin-bottom:16px">📋</div><div style="font-size:16px;font-weight:700;color:${T.tp};margin-bottom:8px">No Trades Yet</div><div style="font-size:13px">Sync your Dhan account to load your trades.</div><button onclick="go('dashboard')" style="margin-top:20px;padding:12px 24px;background:${T.pur};border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:'Syne',sans-serif">Go to Dashboard</button></div></div>`;
+  const f=state.filter;
+  const filtered=state.trades.filter(t=>f==="Wins"?t.pnl>0:f==="Losses"?t.pnl<0:f==="Journal"?t.lesson:true);
+  return`<div class="screen">
+    <div style="font-size:22px;font-weight:700;margin-bottom:20px">Trade History</div>
+    <div style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap">${["All","Wins","Losses","Journal"].map(x=>`<button class="chip ${f===x?'active':''}" onclick="setFilter('${x}')">${x}</button>`).join('')}</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${filtered.map(t=>`<div class="card" style="padding:14px 16px"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px"><div><div style="font-size:14px;font-weight:700">${t.symbol}</div><div style="font-size:11px;color:${T.ts};margin-top:2px">${t.date} · ${t.type} · ${t.qty} qty</div></div><div style="text-align:right"><div style="font-size:15px;font-weight:700;color:${pnlColor(t.pnl)};font-family:DM Mono,monospace">${fmt.pnl(t.pnl)}</div><div style="font-size:11px;color:${T.ts}">R:R ${t.rr||"—"}</div></div></div><div style="display:flex;flex-wrap:wrap;gap:4px">${t.setup?Bdg(t.setup,T.purL):""}${t.emotion?Bdg(t.emotion,t.emotion==="Calm"?T.grn:T.red):""}${Bdg(t.type,t.type==="BUY"?T.grn:T.red)}</div>${t.lesson?`<div style="margin-top:10px;font-size:12px;color:${T.ts};background:${T.s2};border-radius:8px;padding:8px 10px;border-left:2px solid ${T.pur}">💡 ${t.lesson}</div>`:""}</div>`).join('')}
+      ${!filtered.length?`<div style="text-align:center;color:${T.ts};padding:48px 0;font-size:14px">No trades found.</div>`:""}
+    </div>
+  </div>`;
+}
+
+function renderSettings(){
+  const ts=state.testStatus;
+  return`<div class="screen">
+    <div style="font-size:22px;font-weight:700;margin-bottom:6px">Settings</div>
+    <div style="font-size:13px;color:${T.ts};margin-bottom:24px">Your Dhan credentials are stored securely in Netlify — not in the browser.</div>
+    <div class="card" style="border-color:${T.grn}44;background:${T.grn}08">
+      <div style="font-size:15px;font-weight:700;margin-bottom:12px;color:${T.grn}">✓ Secure Server-Side Connection</div>
+      <div style="font-size:13px;color:${T.ts};line-height:1.8">
+        Your token is stored in <strong style="color:${T.tp}">Netlify Environment Variables</strong> — never exposed in the browser.<br/><br/>
+        To update your token:<br/>
+        1. Go to <strong style="color:${T.purL}">netlify.com</strong> → your site<br/>
+        2. Click <strong style="color:${T.purL}">Site configuration → Environment variables</strong><br/>
+        3. Update <code style="color:${T.purL};font-family:DM Mono,monospace">DHAN_TOKEN</code> and <code style="color:${T.purL};font-family:DM Mono,monospace">DHAN_CLIENT_ID</code><br/>
+        4. Click <strong style="color:${T.purL}">Deploys → Trigger deploy</strong>
+      </div>
+    </div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:700;margin-bottom:16px">🔌 Connection Test</div>
+      <button onclick="testAPI()" style="width:100%;padding:13px;background:${ts==="ok"?T.grn:ts==="error"?T.red+"22":T.s2};border:1px solid ${ts==="ok"?T.grn:ts==="error"?T.red:T.brd};border-radius:10px;color:${ts==="ok"?T.s1:T.tp};font-size:14px;font-weight:600;cursor:pointer;font-family:'Syne',sans-serif">
+        ${ts==="testing"?"<span class='spin' style='display:inline-block'>↻</span> Testing…":ts==="ok"?"✓ Connected to Dhan API!":ts==="error"?"✗ Not Connected — Check Netlify env vars":"Test Dhan Connection"}
+      </button>
+    </div>
+    <div class="card">
+      <div style="font-size:15px;font-weight:700;margin-bottom:16px">📏 Daily Rules</div>
+      ${[{label:"Max Trades / Day",key:"maxTrades",min:1,max:10,val:5},{label:"Max Loss (R)",key:"maxLossR",min:1,max:10,val:3},{label:"Max Consecutive Losses",key:"maxConLoss",min:1,max:5,val:2}].map(r=>`<div style="margin-bottom:18px"><div style="display:flex;justify-content:space-between;margin-bottom:8px"><span style="font-size:13px">${r.label}</span><span style="font-size:15px;font-weight:700;color:${T.purL};font-family:DM Mono,monospace" id="rv_${r.key}">${r.val}</span></div><input type="range" min="${r.min}" max="${r.max}" value="${r.val}" oninput="document.getElementById('rv_${r.key}').textContent=this.value"/></div>`).join('')}
+    </div>
+    <button onclick="clearData()" style="width:100%;padding:12px;background:transparent;border:1px solid ${T.red}44;border-radius:10px;color:${T.red};font-size:13px;cursor:pointer;font-family:'Syne',sans-serif;margin-bottom:14px">🗑 Clear All Saved Trade Data</button>
+    <div class="card">
+      <div style="font-size:15px;font-weight:700;margin-bottom:8px">Niyam TradeOS v1.0</div>
+      <div style="font-size:13px;color:${T.ts};line-height:1.7">Personal Trading Discipline Platform<br/><em style="color:${T.purL}">"Trade with discipline, not emotion."</em><br/><span style="color:${T.tm}">Powered by Dhan API v2</span></div>
+    </div>
+  </div>`;
+}
+
+function attachEvents(){const ta=document.getElementById('jlesson');if(ta)ta.addEventListener('input',e=>state.journal.lesson=e.target.value);}
+
+window.go=(s)=>setState({screen:s,testStatus:null,syncMsg:""});
+window.setFilter=(f)=>setState({filter:f});
+
+window.syncDhan=async()=>{
+  setState({syncing:true,syncMsg:""});
+  try{
+    const fund=await dhanCall("/fundlimit");
+    localStorage.setItem('nf',JSON.stringify(fund));
+    let trades=[];
+    try{const orders=await dhanCall("/orders");if(Array.isArray(orders)){trades=orders.filter(o=>["TRADED","PART_TRADED"].includes(o.orderStatus)).map(o=>({id:o.orderId||Date.now(),symbol:o.tradingSymbol||"Unknown",date:(o.createTime||new Date().toISOString()).split(" ")[0],type:o.transactionType||"BUY",qty:parseInt(o.quantity||0),pnl:parseFloat(o.realizedProfit||0),rr:0,sl:0,grade:"B",setup:"",emotion:"",lesson:"",confidence:5}));}}catch(e){}
+    try{if(!trades.length){const pos=await dhanCall("/positions");if(Array.isArray(pos)){trades=pos.map(p=>({id:p.securityId+p.positionType,symbol:p.tradingSymbol||p.securityId,date:new Date().toISOString().split("T")[0],type:p.buyQty>0?"BUY":"SELL",qty:Math.max(p.buyQty||0,p.sellQty||0),pnl:parseFloat(p.realizedProfit||p.unrealizedProfit||0),rr:0,sl:0,grade:"B",setup:"",emotion:"",lesson:"",confidence:5}));}}}catch(e){}
+    const existing=state.trades.filter(t=>t.lesson||t.emotion||t.setup);
+    const merged=[...trades,...existing.filter(e=>!trades.find(t=>t.symbol===e.symbol&&t.date===e.date))];
+    localStorage.setItem('nt',JSON.stringify(merged));
+    setState({syncing:false,fund,trades:merged,syncMsg:`✓ Synced! Funds loaded. ${trades.length} trades found.`});
+    setTimeout(()=>setState({syncMsg:""}),4000);
+  }catch(e){setState({syncing:false,syncMsg:`✗ ${e.message}`});}
+};
+
+window.jset=(key,val)=>{const j={...state.journal};j[key]=j[key]===val?"":val;setState({journal:j});};
+window.jscale=(key,val)=>{const j={...state.journal};j[key]=val;setState({journal:j});};
+window.jtoggle=(m)=>{const j={...state.journal};if(m==="No Mistake"){j.mistakes=["No Mistake"];}else{j.mistakes=j.mistakes.includes(m)?j.mistakes.filter(x=>x!==m):[...j.mistakes.filter(x=>x!=="No Mistake"),m];}setState({journal:j});};
+
+window.saveJournal=()=>{
+  const j=state.journal;
+  if(!j.exitType||!j.setup||!j.outcome||!j.emotion)return;
+  const t={id:Date.now(),symbol:"Manual Entry",date:new Date().toISOString().split("T")[0],type:"—",qty:0,pnl:0,rr:0,sl:0,grade:j.outcome==="Full Success"?"A":j.outcome==="Mistake"?"D":"B",setup:j.setup,emotion:j.emotion,lesson:j.lesson,confidence:j.confidence};
+  const trades=[t,...state.trades];
+  localStorage.setItem('nt',JSON.stringify(trades));
+  setState({trades,journal:{exitType:"",setup:"",outcome:"",confidence:5,satisfaction:5,emotion:"",mistakes:[],lesson:""},journalSaved:true});
+  setTimeout(()=>setState({journalSaved:false}),2500);
+};
+
+window.testAPI=async()=>{
+  setState({testStatus:"testing"});
+  try{await dhanCall("/fundlimit");setState({testStatus:"ok"});}
+  catch(e){console.error(e.message);setState({testStatus:"error"});}
+};
+
+window.clearData=()=>{if(!confirm("Clear all saved trades?"))return;localStorage.removeItem('nt');localStorage.removeItem('nf');setState({trades:[],fund:null});alert("✓ Cleared.");};
+
+render();
+</script>
+</body>
+</html>
