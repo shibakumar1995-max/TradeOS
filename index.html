@@ -14,314 +14,305 @@
   --red:#EF4444;--redL:#F87171;
   --amb:#F59E0B;--ambL:#FCD34D;
   --tp:#F1F5F9;--ts:#64748B;--tm:#1E293B;--td:#334155;
-  --gold:#F59E0B;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);font-family:'Syne',sans-serif;color:var(--tp);max-width:480px;margin:0 auto;min-height:100vh;overflow-x:hidden;}
+body{background:var(--bg);font-family:'Syne',sans-serif;color:var(--tp);max-width:480px;margin:0 auto;min-height:100vh;}
 ::-webkit-scrollbar{display:none;}
-
-/* Typography */
 .mono{font-family:'DM Mono',monospace;}
-.label{font-size:10px;color:var(--ts);text-transform:uppercase;letter-spacing:0.1em;font-weight:500;}
-
-/* Animations */
 @keyframes spin{to{transform:rotate(360deg);}}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
-@keyframes slideUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-@keyframes glow{0%,100%{box-shadow:0 0 10px rgba(99,102,241,0.3);}50%{box-shadow:0 0 25px rgba(99,102,241,0.6);}}
-@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 .spin{animation:spin 1s linear infinite;display:inline-block;}
 .pulse{animation:pulse 2s ease-in-out infinite;}
-.slide-up{animation:slideUp 0.3s ease;}
-
-/* Cards */
-.card{background:var(--s1);border:1px solid var(--brd);border-radius:20px;padding:20px;margin-bottom:12px;position:relative;overflow:hidden;}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(129,140,248,0.4),transparent);}
-.card-sm{background:var(--s2);border-radius:14px;padding:14px 16px;border:1px solid var(--brd);}
-
-/* Glassmorphism hero card */
-.hero-card{background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(16,185,129,0.06));border:1px solid rgba(99,102,241,0.25);border-radius:24px;padding:22px;margin-bottom:12px;position:relative;overflow:hidden;}
-.hero-card::after{content:'';position:absolute;top:-50%;right:-20%;width:200px;height:200px;background:radial-gradient(circle,rgba(99,102,241,0.08),transparent 70%);border-radius:50%;pointer-events:none;}
-
-/* Metric grid */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
-
-/* Stat box */
-.stat{background:var(--s2);border-radius:14px;padding:14px 15px;border:1px solid var(--brd);}
-.stat .lbl{font-size:9px;color:var(--ts);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;}
-.stat .val{font-size:17px;font-weight:700;font-family:'DM Mono',monospace;line-height:1;}
-.stat .sub{font-size:10px;color:var(--ts);margin-top:4px;}
-
-/* P&L display */
-.pnl-pos{color:var(--grn);}
-.pnl-neg{color:var(--red);}
-.pnl-zero{color:var(--ts);}
-
-/* Chips */
-.chip{padding:6px 13px;border-radius:20px;border:1px solid var(--brd2);background:transparent;color:var(--ts);font-size:12px;cursor:pointer;font-family:'Syne',sans-serif;margin:3px;transition:all 0.2s;font-weight:500;}
-.chip:hover{border-color:var(--pur);color:var(--purL);}
+.card{background:var(--s1);border:1px solid var(--brd);border-radius:18px;padding:18px;margin-bottom:12px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(129,140,248,0.35),transparent);}
+.hero{background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(16,185,129,0.05));border:1px solid rgba(99,102,241,0.25);border-radius:22px;padding:20px;margin-bottom:12px;position:relative;overflow:hidden;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.sbox{background:var(--s2);border-radius:13px;padding:13px 14px;border:1px solid var(--brd);}
+.sbox .l{font-size:9px;color:var(--ts);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px;}
+.sbox .v{font-size:16px;font-weight:700;font-family:'DM Mono',monospace;}
+.chip{padding:5px 12px;border-radius:20px;border:1px solid var(--brd2);background:transparent;color:var(--ts);font-size:12px;cursor:pointer;font-family:'Syne',sans-serif;margin:3px;transition:all 0.2s;font-weight:500;}
 .chip.on{border-color:var(--pur);background:rgba(99,102,241,0.15);color:var(--purL);}
 .chip.on-g{border-color:var(--grn);background:rgba(16,185,129,0.12);color:var(--grnL);}
 .chip.on-r{border-color:var(--red);background:rgba(239,68,68,0.12);color:var(--redL);}
 .chip.on-a{border-color:var(--amb);background:rgba(245,158,11,0.12);color:var(--ambL);}
-
-/* Badge */
-.bdg{border-radius:6px;padding:2px 8px;font-size:10px;font-weight:600;font-family:'DM Mono',monospace;display:inline-block;margin:2px;}
-
-/* Scale buttons */
+.bdg{border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;font-family:'DM Mono',monospace;display:inline-block;margin:2px;}
 .sbtn{width:30px;height:30px;border-radius:8px;background:var(--s2);border:1px solid var(--brd);color:var(--ts);cursor:pointer;font-family:'DM Mono',monospace;font-size:12px;margin:2px;transition:all 0.15s;}
 .sbtn.on{background:var(--pur);border-color:var(--pur);color:#fff;}
-
-/* Progress bar */
-.bar-wrap{height:5px;background:var(--s3);border-radius:3px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:3px;transition:width 1s ease;}
-
-/* Toggle */
-.tgl{width:44px;height:24px;border-radius:12px;position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0;}
-.tgl-thumb{width:18px;height:18px;border-radius:9px;background:#fff;position:absolute;top:3px;transition:left 0.2s;}
-
-/* Bottom nav */
-.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(11,14,26,0.95);backdrop-filter:blur(20px);border-top:1px solid var(--brd2);display:flex;z-index:100;padding:10px 0 16px;}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(11,14,26,0.96);backdrop-filter:blur(20px);border-top:1px solid var(--brd2);display:flex;z-index:100;padding:10px 0 16px;}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer;color:var(--ts);padding:4px 2px;font-size:9px;font-family:'Syne',sans-serif;font-weight:500;transition:color 0.2s;}
 .nav-btn.on{color:var(--purL);}
 .nav-dot{width:4px;height:4px;border-radius:2px;background:var(--pur);}
-.nav-icon{font-size:20px;line-height:1;}
-
-/* Screen */
 .screen{padding:20px 16px 90px;min-height:100vh;animation:slideUp 0.25s ease;}
-
-/* Btn */
-.btn{width:100%;padding:15px;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;transition:all 0.2s;}
-.btn-pur{background:linear-gradient(135deg,var(--pur),var(--purD));color:#fff;}
-.btn-pur:hover{filter:brightness(1.1);}
-.btn-pur:disabled{background:var(--s3);color:var(--ts);cursor:not-allowed;filter:none;}
-.btn-grn{background:linear-gradient(135deg,var(--grn),var(--grnD));color:#fff;}
-.btn-ghost{background:transparent;border:1px solid var(--brd2);color:var(--ts);}
-
-/* Section label */
-.slbl{font-size:13px;font-weight:600;color:var(--tp);margin-bottom:8px;}
-.slbl .n{color:var(--purL);}
-
-/* Journal panel */
-.j-panel{background:var(--s2);border-radius:14px;padding:14px;margin-top:10px;border:1px solid var(--brd2);}
+.bar-wrap{height:5px;background:var(--s3);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;transition:width 0.8s ease;}
+.live{display:inline-flex;align-items:center;gap:5px;}
+.live-dot{width:6px;height:6px;border-radius:3px;background:var(--grn);animation:pulse 2s ease-in-out infinite;}
+.ring-wrap{position:relative;flex-shrink:0;}
+.j-panel{background:var(--s2);border-radius:14px;padding:16px;margin-top:10px;border:1px solid var(--brd2);}
 .j-panel .chip{font-size:11px;padding:4px 10px;}
-
-/* Range input */
+.j-q{font-size:11px;color:var(--ts);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;margin-top:12px;}
+.j-q:first-child{margin-top:0;}
+.tbl{width:100%;border-collapse:collapse;}
+.tbl td,.tbl th{padding:9px 8px;font-size:12px;border-bottom:1px solid var(--brd);}
+.tbl th{font-size:10px;color:var(--ts);text-transform:uppercase;letter-spacing:0.08em;font-weight:600;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl .val{font-family:'DM Mono',monospace;font-weight:700;}
+.month-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.month-btn{background:var(--s2);border:1px solid var(--brd2);border-radius:8px;color:var(--tp);padding:6px 12px;cursor:pointer;font-size:13px;font-family:'Syne',sans-serif;}
+.section-h{font-size:13px;font-weight:700;color:var(--tp);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
 input[type=range]{-webkit-appearance:none;height:4px;border-radius:2px;background:var(--s3);outline:none;width:100%;cursor:pointer;}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:8px;background:var(--pur);cursor:pointer;}
 input,textarea{font-family:'Syne',sans-serif;}
-
-/* Divider */
-.div{height:1px;background:var(--brd);margin:14px 0;}
-
-/* Live dot */
-.live{display:inline-flex;align-items:center;gap:5px;}
-.live-dot{width:6px;height:6px;border-radius:3px;background:var(--grn);animation:pulse 2s ease-in-out infinite;}
-
-/* Score ring container */
-.ring-wrap{position:relative;width:110px;height:110px;flex-shrink:0;}
-
-/* Trade card */
-.trade-card{background:var(--s1);border:1px solid var(--brd);border-radius:18px;padding:16px;margin-bottom:10px;transition:border-color 0.2s;}
-.trade-card:hover{border-color:var(--brd2);}
-
-/* Alert banner */
-.alert{border-radius:12px;padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <script>
 // ── API ───────────────────────────────────────────────────────────────────────
-async function dhanCall(endpoint,body){
-  const url=`/.netlify/functions/dhan?endpoint=${encodeURIComponent(endpoint)}`;
-  const opts=body?{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}:{method:"GET"};
-  const res=await fetch(url,opts);
-  const data=await res.json();
-  if(data.error) throw new Error(data.error);
-  if(data.errorCode) throw new Error(`${data.errorCode}: ${data.errorMessage}`);
-  return data;
+async function dhanCall(ep,body){
+  const url=`/.netlify/functions/dhan?endpoint=${encodeURIComponent(ep)}`;
+  const o=body?{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}:{};
+  const r=await fetch(url,o);const d=await r.json();
+  if(d.error)throw new Error(d.error);
+  if(d.errorCode)throw new Error(`${d.errorCode}: ${d.errorMessage}`);
+  return d;
+}
+
+// ── BROKERAGE ESTIMATE ────────────────────────────────────────────────────────
+function estBrokerage(t){
+  const isOpts=/(CE|PE|CALL|PUT|FUT)/.test(t.symbol||"");
+  const isDel=/(CNC|DELIVERY|LONG_TERM)/i.test(t.product||"");
+  const buy=(t.buyAvg||0)*(t.qty||0);
+  const sell=(t.sellAvg||t.buyAvg||0)*(t.qty||0);
+  if(isOpts){
+    const brok=40;const stt=sell*0.000625;
+    const exch=(buy+sell)*0.0005;const gst=(brok+exch)*0.18;
+    return Math.max(5,Math.round(stt+exch+brok+gst));
+  }else if(isDel){
+    const stt=(buy+sell)*0.001;const exch=(buy+sell)*0.0000325;
+    return Math.max(2,Math.round(stt+exch));
+  }else{
+    const brok=40;const stt=sell*0.00025;
+    const exch=(buy+sell)*0.0000345;const gst=(brok+exch)*0.18;
+    return Math.max(5,Math.round(stt+brok+exch+gst));
+  }
 }
 
 // ── SCORING ───────────────────────────────────────────────────────────────────
-function calcBehavior(trades){
-  if(!trades.length) return{total:0,rc:0,disc:0,cons:0,eq:0,wr:0};
-  const rc  = Math.round((trades.filter(t=>t.sl>0).length/trades.length)*100);
-  const disc= Math.round((trades.filter(t=>["A","B","B+"].includes(t.grade)).length/trades.length)*100);
-  const cons= Math.min(100,Math.round((trades.filter(t=>t.lesson||t.emotion).length/trades.length)*100));
-  const eq  = Math.round((trades.reduce((a,t)=>a+(t.confidence||5),0)/trades.length)*10);
-  const wins= trades.filter(t=>t.pnl>0).length;
-  const wr  = Math.round((wins/trades.length)*100);
+function calcBeh(trades){
+  if(!trades.length)return{total:0,rc:0,disc:0,cons:0,eq:0,wr:0};
+  const rc=Math.round((trades.filter(t=>t.sl>0).length/trades.length)*100);
+  const disc=Math.round((trades.filter(t=>["A","B","B+"].includes(t.grade)).length/trades.length)*100);
+  const cons=Math.min(100,Math.round((trades.filter(t=>t.lesson||t.emotion).length/trades.length)*100));
+  const eq=Math.round((trades.reduce((a,t)=>a+(t.confidence||5),0)/trades.length)*10);
+  const wr=Math.round((trades.filter(t=>(t.realizedPnl||0)>0).length/trades.length)*100);
   const total=Math.round(rc*0.30+disc*0.25+cons*0.20+eq*0.15+wr*0.10);
   return{total,rc,disc,cons,eq,wr};
 }
 
+function calcAnalytics(trades){
+  const closed=trades.filter(t=>t.isClosed!==false);
+  const wins=closed.filter(t=>(t.realizedPnl||0)>0);
+  const losses=closed.filter(t=>(t.realizedPnl||0)<0);
+  const highPnl=wins.length?Math.max(...wins.map(t=>t.realizedPnl||0)):0;
+  const lowPnl=losses.length?Math.min(...losses.map(t=>t.realizedPnl||0)):0;
+  const netPnL=trades.reduce((a,t)=>a+(t.realizedPnl||0)+(t.unrealizedPnl||0),0);
+  const totalBrok=trades.reduce((a,t)=>a+estBrokerage(t),0);
+  const avgW=wins.length?wins.reduce((a,t)=>a+(t.realizedPnl||0),0)/wins.length:0;
+  const avgL=losses.length?Math.abs(losses.reduce((a,t)=>a+(t.realizedPnl||0),0)/losses.length):1;
+  const avgRR=(avgW/avgL).toFixed(2);
+  // Emotions
+  const emos={};trades.forEach(t=>{if(t.emotion)emos[t.emotion]=(emos[t.emotion]||0)+1;});
+  // Setups
+  const setups={};
+  trades.forEach(t=>{if(t.setup){if(!setups[t.setup])setups[t.setup]={w:0,n:0,pnl:0};setups[t.setup].n++;if((t.realizedPnl||0)>0)setups[t.setup].w++;setups[t.setup].pnl+=(t.realizedPnl||0);}});
+  // Day-wise
+  const dw={};const DN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  trades.forEach(t=>{if(t.date){const d=DN[new Date(t.date).getDay()];if(!dw[d])dw[d]={w:0,n:0,pnl:0};dw[d].n++;if((t.realizedPnl||0)>0)dw[d].w++;dw[d].pnl+=(t.realizedPnl||0);}});
+  // Outcomes
+  const outcomes={};trades.forEach(t=>{if(t.outcome)outcomes[t.outcome]=(outcomes[t.outcome]||0)+1;});
+  // Exit types
+  const exits={};trades.forEach(t=>{if(t.exitType)exits[t.exitType]=(exits[t.exitType]||0)+1;});
+  // Hold time
+  const withHold=trades.filter(t=>t.holdTime>0);
+  const avgHold=withHold.length?Math.round(withHold.reduce((a,t)=>a+t.holdTime,0)/withHold.length):0;
+  const maxHold=withHold.length?Math.max(...withHold.map(t=>t.holdTime)):0;
+  return{highPnl,lowPnl,netPnL,totalBrok,avgRR,avgW,avgL,emos,setups,dw,outcomes,exits,avgHold,maxHold,
+    wins:wins.length,losses:losses.length,total:trades.length,closed:closed.length};
+}
+
 // ── HELPERS ───────────────────────────────────────────────────────────────────
+const fmtI=(v,d=2)=>Math.abs(v).toLocaleString("en-IN",{minimumFractionDigits:d,maximumFractionDigits:d});
 const fmt={
-  pnl:(v,abs)=>{const n=abs?Math.abs(v):v;return`${n>=0?"+":""}₹${Math.abs(n).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})}`;},
-  inr:(v)=>`₹${Number(v).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2})}`,
-  num:(v)=>Number(v).toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2}),
+  pnl:(v)=>`${v>=0?"+":"-"}₹${fmtI(v)}`,
+  inr:(v)=>`₹${fmtI(v)}`,
+  n:(v)=>fmtI(v),
 };
-const pnlC=(v)=>v>0?"pnl-pos":v<0?"pnl-neg":"pnl-zero";
-const pnlHex=(v)=>v>0?"#10B981":v<0?"#EF4444":"#64748B";
-const scoreHex=(s)=>s>=70?"#10B981":s>=45?"#F59E0B":"#EF4444";
-const gradeHex=(g)=>["A","A+"].includes(g)?"#10B981":["B","B+"].includes(g)?"#F59E0B":"#EF4444";
+const pC=(v)=>v>0?"color:var(--grn)":v<0?"color:var(--red)":"color:var(--ts)";
+const pHex=(v)=>v>0?"#10B981":v<0?"#EF4444":"#64748B";
+const sHex=(s)=>s>=70?"#10B981":s>=45?"#F59E0B":"#EF4444";
+const gHex=(g)=>["A","A+"].includes(g)?"#10B981":["B","B+"].includes(g)?"#F59E0B":"#EF4444";
+const eTypeColor=(e)=>e==="Target Hit"?"var(--grn)":e==="Stop Loss Hit"?"var(--red)":"var(--amb)";
 function nowStr(){const d=new Date();return d.toLocaleTimeString("en-IN",{hour:"2-digit",minute:"2-digit"})+" · "+d.toLocaleDateString("en-IN",{day:"2-digit",month:"short"});}
+function monthLabel(key){const[y,m]=key.split("-");const d=new Date(y,m-1,1);return d.toLocaleString("default",{month:"long",year:"numeric"});}
+function curMonthKey(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;}
 
 // ── STORAGE ───────────────────────────────────────────────────────────────────
-const load=(k,fb)=>{try{const s=localStorage.getItem(k);return s?JSON.parse(s):fb;}catch{return fb;}};
-const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}};
+const ld=(k,fb)=>{try{const s=localStorage.getItem(k);return s?JSON.parse(s):fb;}catch{return fb;}};
+const sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}};
+
+// ── MONTHLY DATA ──────────────────────────────────────────────────────────────
+function getMonthGroups(allTrades){
+  const mg={};
+  allTrades.forEach(t=>{
+    if(!t.date)return;
+    const d=new Date(t.date);
+    const key=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+    if(!mg[key])mg[key]=[];
+    mg[key].push(t);
+  });
+  return mg;
+}
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 let S={
   screen:"dashboard",
-  trades:load('nt',[]),
-  fund:load('nf',null),
+  trades:ld('nt',[]),
+  fund:ld('nf',null),
   syncing:false,syncMsg:"",testStatus:null,
   filter:"All",openJournal:null,
-  j:{exitType:"",setup:"",outcome:"",confidence:5,satisfaction:5,emotion:"",mistakes:[],lesson:""},
-  jSaved:false,
+  selMonth:curMonthKey(),
+  cfg:ld('cfg',{maxTrades:3,capital:30000,dailyLoss:1000,dailyTarget:3000}),
   time:nowStr(),
 };
-setInterval(()=>{S.time=nowStr();if(S.screen==="dashboard")render();},30000);
-
+setInterval(()=>{S.time=nowStr();if(S.screen==="dashboard")render();},60000);
 const set=(p)=>{Object.assign(S,p);render();};
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
 function render(){
   document.getElementById('app').innerHTML=
     `<div style="background:var(--bg);min-height:100vh;max-width:480px;margin:0 auto;">
-      ${({dashboard:rDash,analytics:rAnal,trades:rTrades,settings:rSettings}[S.screen]||rDash)()}
+      ${({dashboard:rDash,analytics:rAnal,trades:rTrades,settings:rSet}[S.screen]||rDash)()}
       ${rNav()}
     </div>`;
   bind();
 }
-
-// ── NAV ───────────────────────────────────────────────────────────────────────
 function rNav(){
   const tabs=[["dashboard","⬡","Home"],["analytics","◈","Analytics"],["trades","≡","Trades"],["settings","⚙","Settings"]];
-  return`<div class="nav">${tabs.map(([id,ic,lb])=>`
-    <button class="nav-btn ${S.screen===id?'on':''}" onclick="go('${id}')">
-      <span class="nav-icon">${ic}</span>${lb}
-      ${S.screen===id?'<div class="nav-dot"></div>':''}
-    </button>`).join('')}</div>`;
+  return`<div class="nav">${tabs.map(([id,ic,lb])=>`<button class="nav-btn ${S.screen===id?"on":""}" onclick="go('${id}')"><span style="font-size:20px">${ic}</span>${lb}${S.screen===id?'<div class="nav-dot"></div>':''}</button>`).join('')}</div>`;
 }
 
 // ── COMPONENTS ────────────────────────────────────────────────────────────────
 function Ring(score,size=110){
-  const r=42,cx=size/2,cy=size/2,circ=2*Math.PI*r;
-  const dash=(score/100)*circ;
-  const c=scoreHex(score);
-  const label=score>=70?"DISCIPLINED":score>=45?"CAUTION":"HIGH RISK";
+  const r=42,cx=size/2,cy=size/2,circ=2*Math.PI*r,dash=(score/100)*circ,c=sHex(score);
+  const lbl=score>=70?"DISCIPLINED":score>=45?"CAUTION":"HIGH RISK";
   return`<div class="ring-wrap" style="width:${size}px;height:${size}px">
     <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
       <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#1A1F30" stroke-width="8"/>
-      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c}" stroke-width="8"
-        stroke-dasharray="${dash} ${circ}" stroke-linecap="round"
-        transform="rotate(-90 ${cx} ${cy})" style="transition:stroke-dasharray 1s ease;filter:drop-shadow(0 0 6px ${c}88)"/>
+      <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${c}" stroke-width="8" stroke-dasharray="${dash} ${circ}" stroke-linecap="round" transform="rotate(-90 ${cx} ${cy})" style="filter:drop-shadow(0 0 6px ${c}88)"/>
     </svg>
     <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px">
-      <span class="mono" style="font-size:22px;font-weight:700;color:${c};line-height:1">${score}</span>
-      <span style="font-size:7px;color:${c};letter-spacing:0.08em;font-weight:700">${label}</span>
+      <span class="mono" style="font-size:22px;font-weight:700;color:${c}">${score}</span>
+      <span style="font-size:7px;color:${c};letter-spacing:0.08em;font-weight:700">${lbl}</span>
     </div>
   </div>`;
 }
-
 function MBar(label,weight,val){
-  const c=scoreHex(val);
+  const c=sHex(val);
   return`<div style="margin-bottom:9px">
-    <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+    <div style="display:flex;justify-content:space-between;margin-bottom:4px">
       <span style="font-size:11px;color:var(--ts)">${label}<span style="color:var(--tm);margin-left:4px">${weight}%</span></span>
       <span class="mono" style="font-size:11px;color:${c};font-weight:600">${val}%</span>
     </div>
     <div class="bar-wrap"><div class="bar-fill" style="width:${val}%;background:linear-gradient(90deg,${c}88,${c})"></div></div>
   </div>`;
 }
-
-function Bdg(t,c){return`<span class="bdg" style="background:${c}18;color:${c};border:1px solid ${c}33">${t}</span>`;}
-
-function Stat(lbl,val,color,sub){
-  return`<div class="stat">
-    <div class="lbl">${lbl}</div>
-    <div class="val ${pnlC(typeof val==='number'?val:0)}" style="${color?`color:${color}`:''}">${typeof val==='string'?val:fmt.pnl(val)}</div>
-    ${sub?`<div class="sub">${sub}</div>`:''}
-  </div>`;
-}
+function Bdg(t,c,bg){return`<span class="bdg" style="background:${bg||c+'18'};color:${c};border:1px solid ${c}33">${t}</span>`;}
+function SBox(l,v,c,sub){return`<div class="sbox"><div class="l">${l}</div><div class="v" style="color:${c||"var(--tp)"}">${v}</div>${sub?`<div style="font-size:10px;color:var(--ts);margin-top:3px">${sub}</div>`:""}</div>`;}
 
 // ── DASHBOARD ─────────────────────────────────────────────────────────────────
 function rDash(){
-  const beh=calcBehavior(S.trades);
+  const beh=calcBeh(S.trades);
   const closedPnL=S.trades.reduce((a,t)=>a+(t.realizedPnl||0),0);
   const openPnL=S.trades.reduce((a,t)=>a+(t.unrealizedPnl||0),0);
   const totalPnL=closedPnL+openPnL;
+  const wins=S.trades.filter(t=>(t.realizedPnl||0)>0).length;
   const openCount=S.trades.filter(t=>t.isClosed===false).length;
   const closedCount=S.trades.filter(t=>t.isClosed!==false).length;
-  const wins=S.trades.filter(t=>(t.realizedPnl||0)>0).length;
-  const total=S.trades.length;
   const avail=S.fund?.availabelBalance||0;
   const margin=S.fund?.utilizedAmount||0;
-  const sodLimit=S.fund?.sodLimit||0;
-
-  const riskLevel=beh.total>=70?"LOW RISK":beh.total>=45?"MODERATE":"HIGH RISK";
-  const riskColor=scoreHex(beh.total);
-
-  // Loss warning
-  const lossWarning=closedPnL<-1000;
-
+  const {capital,dailyLoss,dailyTarget,maxTrades}=S.cfg;
+  const lossHit=closedPnL<=-dailyLoss;
+  const targetHit=closedPnL>=dailyTarget;
+  const lossUsed=Math.min(100,Math.abs(Math.min(closedPnL,0))/dailyLoss*100);
+  const profitPct=Math.min(100,Math.max(0,closedPnL)/dailyTarget*100);
   return`<div class="screen">
-    <!-- HEADER -->
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
       <div>
-        <div style="font-size:10px;color:var(--ts);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:3px">NIYAM TRADEOS</div>
+        <div style="font-size:10px;color:var(--ts);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:2px">NIYAM TRADEOS</div>
         <div style="font-size:24px;font-weight:800;letter-spacing:-0.5px">Dashboard</div>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
-        <button onclick="syncDhan()" style="display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--pur),var(--purD));border:none;border-radius:10px;color:#fff;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;opacity:${S.syncing?0.7:1}">
-          <span class="${S.syncing?'spin':''}" style="display:inline-block;font-size:14px">↻</span>${S.syncing?"SYNCING":"SYNC DHAN"}
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+        <button onclick="syncDhan()" style="display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,var(--pur),var(--purD));border:none;border-radius:10px;color:#fff;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">
+          <span class="${S.syncing?"spin":""}" style="display:inline-block">↻</span>${S.syncing?"SYNCING":"SYNC DHAN"}
         </button>
         <div class="live"><div class="live-dot"></div><span style="font-size:10px;color:var(--ts)">${S.time}</span></div>
       </div>
     </div>
 
-    ${S.syncMsg?`<div class="alert" style="background:${S.syncMsg.startsWith("✓")?"rgba(16,185,129,0.1)":"rgba(239,68,68,0.1)"};border:1px solid ${S.syncMsg.startsWith("✓")?"var(--grn)":"var(--red)"}33">
-      <span style="font-size:18px">${S.syncMsg.startsWith("✓")?"✓":"⚠"}</span>
-      <span style="font-size:12px;color:${S.syncMsg.startsWith("✓")?"var(--grnL)":"var(--redL)"}">${S.syncMsg}</span>
+    ${S.syncMsg?`<div style="padding:11px 14px;border-radius:12px;margin-bottom:12px;font-size:12px;background:${S.syncMsg.startsWith("✓")?"rgba(16,185,129,0.1)":"rgba(239,68,68,0.1)"};color:${S.syncMsg.startsWith("✓")?"var(--grnL)":"var(--redL)"};border:1px solid ${S.syncMsg.startsWith("✓")?"var(--grn)":"var(--red)"}33">${S.syncMsg}</div>`:""}
+
+    ${lossHit?`<div style="padding:12px 14px;border-radius:12px;margin-bottom:12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);display:flex;align-items:center;gap:8px">
+      <span style="font-size:20px">🚨</span>
+      <div><div style="font-size:13px;font-weight:700;color:var(--redL)">Daily Loss Limit Hit!</div>
+      <div style="font-size:11px;color:var(--ts)">Stop trading. You've hit -₹${dailyLoss} limit.</div></div>
+    </div>`:""}
+    ${targetHit?`<div style="padding:12px 14px;border-radius:12px;margin-bottom:12px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);display:flex;align-items:center;gap:8px">
+      <span style="font-size:20px">🎯</span>
+      <div><div style="font-size:13px;font-weight:700;color:var(--grnL)">Daily Target Hit!</div>
+      <div style="font-size:11px;color:var(--ts)">Congratulations! Consider stopping for the day.</div></div>
     </div>`:""}
 
-    ${lossWarning?`<div class="alert" style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25)">
-      <span style="font-size:16px">🚨</span>
-      <div><div style="font-size:12px;font-weight:700;color:var(--redL)">Loss Alert</div>
-      <div style="font-size:11px;color:var(--ts)">Closed P&L exceeds -₹1,000. Review your risk.</div></div>
-    </div>`:""}
-
-    <!-- P&L HERO CARD -->
-    <div class="hero-card">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+    <!-- P&L HERO -->
+    <div class="hero">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
         <div>
-          <div class="label" style="margin-bottom:6px">TOTAL P&L TODAY</div>
-          <div class="mono ${pnlC(totalPnL)}" style="font-size:32px;font-weight:700;line-height:1;filter:drop-shadow(0 0 8px ${pnlHex(totalPnL)}66)">${fmt.pnl(totalPnL)}</div>
-          <div style="font-size:11px;color:var(--ts);margin-top:6px">${total} positions · ${wins} wins · ${total-wins} losses</div>
+          <div style="font-size:9px;color:var(--ts);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:6px">TOTAL P&L TODAY</div>
+          <div class="mono" style="font-size:34px;font-weight:800;line-height:1;color:${pHex(totalPnL)};filter:drop-shadow(0 0 10px ${pHex(totalPnL)}55)">${fmt.pnl(totalPnL)}</div>
+          <div style="font-size:11px;color:var(--ts);margin-top:6px">${S.trades.length} trades · ${wins}W · ${S.trades.length-wins}L</div>
         </div>
         <div style="text-align:right">
           ${Bdg(S.fund?"LIVE":"OFFLINE",S.fund?"#10B981":"#64748B")}
-          <div style="margin-top:8px">
-            <div style="font-size:10px;color:var(--ts)">Risk Level</div>
-            <div style="font-size:12px;font-weight:700;color:${riskColor}">${riskLevel}</div>
+          <div style="margin-top:8px;font-size:10px;color:var(--ts)">Capital</div>
+          <div class="mono" style="font-size:13px;font-weight:700;color:var(--purL)">${fmt.inr(capital)}</div>
+        </div>
+      </div>
+      <!-- Progress bars -->
+      <div style="display:flex;gap:6px;margin-bottom:12px">
+        <div style="flex:1">
+          <div style="font-size:9px;color:var(--ts);margin-bottom:4px">LOSS USED (limit: ₹${(dailyLoss).toLocaleString("en-IN")})</div>
+          <div style="height:6px;background:var(--s3);border-radius:3px;overflow:hidden">
+            <div style="height:100%;width:${lossUsed}%;background:${lossUsed>80?"var(--red)":lossUsed>50?"var(--amb)":"var(--grn)"};border-radius:3px"></div>
+          </div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:9px;color:var(--ts);margin-bottom:4px">TARGET (₹${(dailyTarget).toLocaleString("en-IN")})</div>
+          <div style="height:6px;background:var(--s3);border-radius:3px;overflow:hidden">
+            <div style="height:100%;width:${profitPct}%;background:var(--grn);border-radius:3px"></div>
           </div>
         </div>
       </div>
-      <!-- P&L BREAKDOWN BAR -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:12px;border:1px solid rgba(16,185,129,0.2)">
+      <div class="g2">
+        <div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:12px;border:1px solid rgba(16,185,129,0.18)">
           <div style="font-size:9px;color:var(--ts);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px">Realized (Closed)</div>
-          <div class="mono ${pnlC(closedPnL)}" style="font-size:16px;font-weight:700">${fmt.pnl(closedPnL)}</div>
+          <div class="mono" style="font-size:16px;font-weight:700;color:${pHex(closedPnL)}">${fmt.pnl(closedPnL)}</div>
           <div style="font-size:10px;color:var(--ts);margin-top:3px">${closedCount} closed</div>
         </div>
-        <div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:12px;border:1px solid rgba(99,102,241,0.2)">
+        <div style="background:rgba(0,0,0,0.3);border-radius:12px;padding:12px;border:1px solid rgba(99,102,241,0.18)">
           <div style="font-size:9px;color:var(--ts);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:5px">Unrealized (Open)</div>
-          <div class="mono ${pnlC(openPnL)}" style="font-size:16px;font-weight:700">${fmt.pnl(openPnL)}</div>
+          <div class="mono" style="font-size:16px;font-weight:700;color:${pHex(openPnL)}">${fmt.pnl(openPnL)}</div>
           <div style="font-size:10px;color:var(--ts);margin-top:3px">${openCount} open</div>
         </div>
       </div>
@@ -330,14 +321,8 @@ function rDash(){
     <!-- BEHAVIOURAL SCORE -->
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
-        <div>
-          <div style="font-size:15px;font-weight:700">Behavioural Score</div>
-          <div style="font-size:11px;color:var(--ts);margin-top:2px">Discipline · Risk · Consistency</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:10px;color:var(--ts);margin-bottom:4px">COMPOSITE</div>
-          <div class="mono" style="font-size:28px;font-weight:800;color:${scoreHex(beh.total)};filter:drop-shadow(0 0 8px ${scoreHex(beh.total)}55)">${beh.total}%</div>
-        </div>
+        <div><div style="font-size:14px;font-weight:700">Behavioural Score</div><div style="font-size:11px;color:var(--ts);margin-top:2px">Discipline · Risk · Consistency</div></div>
+        <div class="mono" style="font-size:26px;font-weight:800;color:${sHex(beh.total)}">${beh.total}%</div>
       </div>
       <div style="display:flex;gap:14px;align-items:center">
         ${Ring(beh.total)}
@@ -351,69 +336,62 @@ function rDash(){
       </div>
     </div>
 
-    <!-- ACCOUNT STATS -->
+    <!-- ACCOUNT + RULES -->
     <div class="card">
-      <div style="font-size:14px;font-weight:700;margin-bottom:14px">Account Overview</div>
-      <div class="grid-2" style="gap:10px;margin-bottom:10px">
-        <div class="stat">
-          <div class="lbl">Available Funds</div>
-          <div class="val mono" style="color:var(--tp);font-size:15px">${fmt.inr(avail)}</div>
-        </div>
-        <div class="stat">
-          <div class="lbl">Margin Used</div>
-          <div class="val mono" style="color:var(--tp);font-size:15px">${fmt.inr(margin)}</div>
-        </div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px">Account Overview</div>
+      <div class="g2" style="margin-bottom:10px">
+        ${SBox("Available Funds",fmt.inr(avail))}
+        ${SBox("Margin Used",fmt.inr(margin))}
       </div>
-      <div class="grid-3">
-        <div style="background:var(--s2);border-radius:12px;padding:12px;border:1px solid var(--brd);text-align:center">
-          <div class="lbl" style="margin-bottom:5px">TRADES</div>
-          <div class="mono" style="font-size:20px;font-weight:700;color:var(--purL)">${total}</div>
+      <div class="g3">
+        <div style="background:var(--s2);border-radius:12px;padding:11px;border:1px solid var(--brd);text-align:center">
+          <div style="font-size:9px;color:var(--ts);margin-bottom:4px;text-transform:uppercase">TRADES</div>
+          <div class="mono" style="font-size:18px;font-weight:700;color:var(--purL)">${S.trades.length}/${maxTrades}</div>
         </div>
-        <div style="background:rgba(16,185,129,0.08);border-radius:12px;padding:12px;border:1px solid rgba(16,185,129,0.2);text-align:center">
-          <div class="lbl" style="margin-bottom:5px;color:var(--grn)">WINS</div>
-          <div class="mono" style="font-size:20px;font-weight:700;color:var(--grn)">${wins}</div>
+        <div style="background:rgba(16,185,129,0.08);border-radius:12px;padding:11px;border:1px solid rgba(16,185,129,0.2);text-align:center">
+          <div style="font-size:9px;color:var(--grn);margin-bottom:4px;text-transform:uppercase">WINS</div>
+          <div class="mono" style="font-size:18px;font-weight:700;color:var(--grn)">${wins}</div>
         </div>
-        <div style="background:rgba(239,68,68,0.08);border-radius:12px;padding:12px;border:1px solid rgba(239,68,68,0.2);text-align:center">
-          <div class="lbl" style="margin-bottom:5px;color:var(--red)">LOSSES</div>
-          <div class="mono" style="font-size:20px;font-weight:700;color:var(--red)">${total-wins}</div>
+        <div style="background:rgba(239,68,68,0.08);border-radius:12px;padding:11px;border:1px solid rgba(239,68,68,0.2);text-align:center">
+          <div style="font-size:9px;color:var(--red);margin-bottom:4px;text-transform:uppercase">LOSSES</div>
+          <div class="mono" style="font-size:18px;font-weight:700;color:var(--red)">${S.trades.length-wins}</div>
         </div>
       </div>
     </div>
 
-    <!-- QUICK RULES -->
-    <div class="card" style="background:linear-gradient(135deg,rgba(99,102,241,0.06),rgba(16,185,129,0.04))">
-      <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--tp)">📋 Trading Rules Status</div>
+    <!-- RULES STATUS -->
+    <div class="card" style="background:linear-gradient(135deg,rgba(99,102,241,0.05),rgba(16,185,129,0.03))">
+      <div style="font-size:14px;font-weight:700;margin-bottom:12px">📋 Trading Rules</div>
       ${[
-        ["Max 5 trades/day", total<=5, `${total}/5 used`],
-        ["No revenge trading", !S.trades.some(t=>t.setup==="Random"||t.emotion==="Revenge"), S.trades.some(t=>t.setup==="Random"||t.emotion==="Revenge")?"⚠ Violation detected":"Clean"],
+        ["Max "+maxTrades+" trades/day", S.trades.length<maxTrades, `${S.trades.length}/${maxTrades} used`],
+        ["Daily loss within ₹"+dailyLoss.toLocaleString("en-IN"), !lossHit, lossHit?"⚠ LIMIT HIT":fmt.pnl(Math.min(closedPnL,0))],
+        ["Daily target ₹"+dailyTarget.toLocaleString("en-IN"), targetHit||closedPnL>0, targetHit?"✓ TARGET HIT":fmt.pnl(Math.max(closedPnL,0))],
         ["Journal every trade", S.trades.length===0||S.trades.filter(t=>t.lesson||t.emotion).length/S.trades.length>=0.8, `${S.trades.filter(t=>t.lesson||t.emotion).length}/${S.trades.length} journaled`],
-      ].map(([rule,ok,note])=>`
-        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--brd)">
-          <div style="display:flex;align-items:center;gap:8px">
-            <div style="width:8px;height:8px;border-radius:4px;background:${ok?"var(--grn)":"var(--red)"};${ok?"box-shadow:0 0 6px var(--grn)":""}"></div>
-            <span style="font-size:12px;color:var(--tp)">${rule}</span>
-          </div>
-          <span style="font-size:11px;color:${ok?"var(--grnL)":"var(--redL)"};font-weight:600">${note}</span>
-        </div>`).join('')}
+        ["No random/revenge trading", !S.trades.some(t=>["Random","Emotional"].includes(t.setup)||t.emotion==="Revenge"), S.trades.some(t=>["Random","Emotional"].includes(t.setup)||t.emotion==="Revenge")?"⚠ Violation":"Clean"],
+      ].map(([rule,ok,note])=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--brd)">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:7px;height:7px;border-radius:50%;background:${ok?"var(--grn)":"var(--red)"};${ok?"box-shadow:0 0 5px var(--grn)":""}"></div>
+          <span style="font-size:12px">${rule}</span>
+        </div>
+        <span style="font-size:11px;font-weight:600;color:${ok?"var(--grnL)":"var(--redL)"}">${note}</span>
+      </div>`).join('')}
     </div>
 
-    <!-- RECENT TRADES PREVIEW -->
+    <!-- RECENT -->
     ${S.trades.length?`<div class="card">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
         <div style="font-size:14px;font-weight:700">Recent Positions</div>
         <button onclick="go('trades')" style="font-size:11px;color:var(--purL);background:none;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600">View All →</button>
       </div>
-      ${S.trades.slice(0,3).map(t=>{
-        const pnl=t.realizedPnl||0;
-        const unr=t.unrealizedPnl||0;
-        return`<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--brd)">
+      ${S.trades.slice(0,4).map(t=>{const pnl=t.realizedPnl||0;const unr=t.unrealizedPnl||0;return`
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--brd)">
           <div>
-            <div style="font-size:13px;font-weight:600">${t.symbol.split("-").slice(0,2).join(" ").slice(0,18)}</div>
-            <div style="font-size:10px;color:var(--ts);margin-top:2px">${t.type} · ${t.qty} qty · ${t.isClosed===false?"OPEN":"CLOSED"}</div>
+            <div style="font-size:12px;font-weight:600">${t.symbol.replace(/-May\d+/,"-May").slice(0,20)}</div>
+            <div style="font-size:10px;color:var(--ts)">${t.type} · ${t.qty}qty · ${t.isClosed===false?"OPEN":"CLOSED"}</div>
           </div>
           <div style="text-align:right">
-            <div class="mono ${pnlC(pnl)}" style="font-size:13px;font-weight:700">${fmt.pnl(pnl)}</div>
-            ${unr!==0?`<div class="mono" style="font-size:10px;color:${pnlHex(unr)}">MTM ${fmt.pnl(unr)}</div>`:""}
+            <div class="mono" style="font-size:13px;font-weight:700;color:${pHex(pnl)}">${fmt.pnl(pnl)}</div>
+            ${unr!==0?`<div class="mono" style="font-size:10px;color:${pHex(unr)}">MTM ${fmt.pnl(unr)}</div>`:""}
           </div>
         </div>`;}).join('')}
     </div>`:""}
@@ -424,346 +402,485 @@ function rDash(){
 function rTrades(){
   const filters=["All","Open","Closed","Wins","Losses","Journaled"];
   const filtered=S.trades.filter(t=>{
-    const pnl=t.realizedPnl||t.pnl||0;
-    if(S.filter==="Open") return t.isClosed===false;
-    if(S.filter==="Closed") return t.isClosed!==false;
-    if(S.filter==="Wins") return pnl>0;
-    if(S.filter==="Losses") return pnl<0;
-    if(S.filter==="Journaled") return t.lesson||t.emotion;
+    const pnl=t.realizedPnl||0;
+    if(S.filter==="Open")return t.isClosed===false;
+    if(S.filter==="Closed")return t.isClosed!==false;
+    if(S.filter==="Wins")return pnl>0;
+    if(S.filter==="Losses")return pnl<0;
+    if(S.filter==="Journaled")return t.lesson||t.emotion;
     return true;
   });
-
-  const cards=filtered.map(t=>{
-    const pnl=t.realizedPnl||t.pnl||0;
-    const unr=t.unrealizedPnl||0;
-    const isOpen=S.openJournal===t.id;
-    const hasJournal=t.lesson||t.emotion||t.setup;
-    return`<div class="trade-card" style="${isOpen?`border-color:var(--pur);box-shadow:0 0 20px rgba(99,102,241,0.15)`:''}">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
-            <span style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px">${t.symbol}</span>
-            ${Bdg(t.isClosed===false?"OPEN":"CLOSED",t.isClosed===false?"#818CF8":"#64748B")}
-          </div>
-          <div style="font-size:10px;color:var(--ts)">${t.date} · ${t.product||""}</div>
-          ${t.buyAvg>0?`<div style="font-size:10px;color:var(--td);margin-top:2px">Avg ₹${fmt.num(t.buyAvg)}${t.sellAvg>0?' → ₹'+fmt.num(t.sellAvg):''} · ${t.qty} qty</div>`:""}
-        </div>
-        <div style="text-align:right;flex-shrink:0;margin-left:12px">
-          <div class="mono ${pnlC(pnl)}" style="font-size:17px;font-weight:700;filter:drop-shadow(0 0 4px ${pnlHex(pnl)}44)">${fmt.pnl(pnl)}</div>
-          ${unr!==0?`<div class="mono" style="font-size:11px;color:${pnlHex(unr)}">MTM ${fmt.pnl(unr)}</div>`:""}
-          <div style="font-size:10px;color:var(--ts);margin-top:2px">${Bdg(t.type,t.type==="BUY"?"#10B981":"#EF4444")}</div>
-        </div>
-      </div>
-
-      ${t.setup||t.emotion||t.grade?`<div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:8px">
-        ${t.setup?Bdg(t.setup,"#818CF8"):""}
-        ${t.emotion?Bdg(t.emotion,t.emotion==="Calm"?"#10B981":"#EF4444"):""}
-        ${t.grade&&t.grade!=="B"?Bdg("Grade "+t.grade,gradeHex(t.grade)):""}
-        ${t.outcome?Bdg(t.outcome,t.outcome==="Full Success"?"#10B981":t.outcome==="Mistake"?"#EF4444":"#F59E0B"):""}
-      </div>`:""}
-
-      ${t.lesson?`<div style="font-size:11px;color:var(--ts);background:rgba(99,102,241,0.08);border-radius:8px;padding:8px 10px;border-left:2px solid var(--pur);margin-bottom:8px;line-height:1.5">💡 ${t.lesson}</div>`:""}
-
-      <button onclick="toggleJ('${t.id}')" style="width:100%;padding:8px;background:${isOpen?"rgba(99,102,241,0.2)":hasJournal?"rgba(16,185,129,0.08)":"var(--s2)"};border:1px solid ${isOpen?"var(--pur)":hasJournal?"rgba(16,185,129,0.3)":"var(--brd)"};border-radius:10px;color:${isOpen?"var(--purL)":hasJournal?"var(--grnL)":"var(--ts)"};font-size:12px;font-weight:600;cursor:pointer;font-family:'Syne',sans-serif;transition:all 0.2s">
-        ${isOpen?"▲ Close Journal":hasJournal?"✏️ Edit Journal":"📝 Add Journal"}
-      </button>
-
-      ${isOpen?rInlineJ(t):""}
-    </div>`;
-  }).join('');
-
   const totalPnL=S.trades.reduce((a,t)=>a+(t.realizedPnl||0)+(t.unrealizedPnl||0),0);
-
   return`<div class="screen">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
       <div>
         <div style="font-size:24px;font-weight:800">Trades</div>
-        <div style="font-size:11px;color:var(--ts);margin-top:2px">${S.trades.length} positions · <span class="mono ${pnlC(totalPnL)}">${fmt.pnl(totalPnL)}</span></div>
+        <div class="mono" style="font-size:11px;margin-top:2px;color:${pHex(totalPnL)}">${S.trades.length} positions · ${fmt.pnl(totalPnL)}</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:5px;margin-bottom:14px;overflow-x:auto;padding-bottom:4px">
+      ${filters.map(f=>`<button class="chip${S.filter===f?" on":""}" onclick="setF('${f}')" style="white-space:nowrap">${f}</button>`).join('')}
+    </div>
+    ${filtered.length?filtered.map(t=>rTradeCard(t)).join(''):
+    `<div style="text-align:center;padding:60px 20px;color:var(--ts)"><div style="font-size:40px;margin-bottom:12px">📋</div><div style="font-size:14px;font-weight:700;color:var(--tp);margin-bottom:6px">${S.trades.length?"No trades for this filter":"No trades yet"}</div></div>`}
+  </div>`;
+}
+
+function rTradeCard(t){
+  const pnl=t.realizedPnl||0;
+  const unr=t.unrealizedPnl||0;
+  const isOpen=S.openJournal===t.id;
+  const hasJ=t.lesson||t.emotion||t.setup;
+  const brok=estBrokerage(t);
+  const netPnL=pnl-brok;
+  return`<div style="background:var(--s1);border:1px solid ${isOpen?"var(--pur)":"var(--brd)"};border-radius:18px;padding:16px;margin-bottom:10px;${isOpen?"box-shadow:0 0 20px rgba(99,102,241,0.15)":""}">
+    <!-- TOP ROW -->
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:3px">
+          <span style="font-size:14px;font-weight:700">${t.symbol.replace(/-May\d{4}-/g," ").slice(0,22)}</span>
+          ${Bdg(t.isClosed===false?"OPEN":"CLOSED",t.isClosed===false?"#818CF8":"#64748B")}
+          ${t.exitType?Bdg(t.exitType==="Target Hit"?"TARGET ✓":t.exitType==="Stop Loss Hit"?"SL ✗":"MANUAL",eTypeColor(t.exitType)):""}
+        </div>
+        <div style="font-size:10px;color:var(--ts)">${t.date} · ${t.product||""} · ${t.qty} qty</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;margin-left:10px">
+        <div class="mono" style="font-size:18px;font-weight:800;color:${pHex(pnl)}">${fmt.pnl(pnl)}</div>
+        ${unr!==0?`<div class="mono" style="font-size:11px;color:${pHex(unr)}">MTM ${fmt.pnl(unr)}</div>`:""}
       </div>
     </div>
 
-    <!-- FILTER PILLS -->
-    <div style="display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px">
-      ${filters.map(f=>`<button class="chip${S.filter===f?' on':''}" onclick="setF('${f}')" style="white-space:nowrap">${f}</button>`).join('')}
+    <!-- DETAILS ROW -->
+    <div style="background:var(--s2);border-radius:10px;padding:10px;margin-bottom:10px">
+      <div class="g2" style="gap:8px">
+        <div>
+          <div style="font-size:9px;color:var(--ts);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Entry Avg</div>
+          <div class="mono" style="font-size:13px;font-weight:600;color:var(--tp)">${t.buyAvg>0?"₹"+fmt.n(t.buyAvg):"—"}</div>
+        </div>
+        <div>
+          <div style="font-size:9px;color:var(--ts);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Exit Avg</div>
+          <div class="mono" style="font-size:13px;font-weight:600;color:var(--tp)">${t.sellAvg>0?"₹"+fmt.n(t.sellAvg):"—"}</div>
+        </div>
+        <div>
+          <div style="font-size:9px;color:var(--ts);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Hold Time</div>
+          <div class="mono" style="font-size:13px;font-weight:600;color:var(--tp)">${t.holdTime>0?t.holdTime+"m":"—"}</div>
+        </div>
+        <div>
+          <div style="font-size:9px;color:var(--ts);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px">Net (after charges)</div>
+          <div class="mono" style="font-size:13px;font-weight:700;color:${pHex(netPnL)}">${fmt.pnl(netPnL)}</div>
+        </div>
+      </div>
     </div>
 
-    ${filtered.length?cards:`<div style="text-align:center;padding:60px 20px;color:var(--ts)">
-      <div style="font-size:40px;margin-bottom:12px">📋</div>
-      <div style="font-size:15px;font-weight:700;color:var(--tp);margin-bottom:6px">${S.trades.length?'No trades for this filter':'No trades yet'}</div>
-      <div style="font-size:12px">Sync Dhan on Home to load positions</div>
-    </div>`}
+    <!-- BADGES -->
+    <div style="display:flex;flex-wrap:wrap;gap:3px;margin-bottom:10px">
+      ${Bdg(t.type,t.type==="BUY"?"#10B981":"#EF4444")}
+      ${t.grade?Bdg("Grade "+t.grade,gHex(t.grade)):`<button onclick="tjSet('${t.id}','grade','A')" style="background:var(--s2);border:1px dashed var(--brd2);border-radius:6px;padding:2px 8px;font-size:10px;color:var(--ts);cursor:pointer;font-family:'Syne',sans-serif">+ Grade</button>`}
+      ${t.setup?Bdg(t.setup,"#818CF8"):""}
+      ${t.emotion?Bdg(t.emotion,t.emotion==="Calm"?"#10B981":"#EF4444"):""}
+      ${t.outcome?Bdg(t.outcome,t.outcome==="Full Success"?"#10B981":t.outcome==="Mistake"?"#EF4444":"#F59E0B"):""}
+    </div>
+
+    <!-- LESSON -->
+    ${t.lesson?`<div style="font-size:11px;color:var(--ts);background:rgba(99,102,241,0.08);border-radius:8px;padding:8px 10px;border-left:2px solid var(--pur);margin-bottom:10px;line-height:1.5">💡 ${t.lesson}</div>`:""}
+
+    <!-- JOURNAL BTN -->
+    <button onclick="toggleJ('${t.id}')" style="width:100%;padding:9px;background:${isOpen?"rgba(99,102,241,0.2)":hasJ?"rgba(16,185,129,0.08)":"var(--s2)"};border:1px solid ${isOpen?"var(--pur)":hasJ?"rgba(16,185,129,0.3)":"var(--brd)"};border-radius:10px;color:${isOpen?"var(--purL)":hasJ?"var(--grnL)":"var(--ts)"};font-size:12px;font-weight:600;cursor:pointer;font-family:'Syne',sans-serif">
+      ${isOpen?"▲ Close Journal":hasJ?"✏️ Edit Journal":"📝 Add Journal"}
+    </button>
+
+    ${isOpen?rInlineJ(t):""}
   </div>`;
 }
 
 function rInlineJ(t){
-  const emoColor=(e)=>e==="Calm"?"on-g":["Frustrated","Overconfident","Revenge"].includes(e)?"on-r":"on-a";
+  const ec=(e)=>e==="Calm"?"on-g":["Frustrated","Overconfident","Revenge"].includes(e)?"on-r":"on-a";
   return`<div class="j-panel">
-    <div style="font-size:13px;font-weight:700;margin-bottom:12px;color:var(--purL)">📓 Journal Entry</div>
+    <div style="font-size:14px;font-weight:700;margin-bottom:14px;color:var(--purL)">📓 Journal Entry — ${t.symbol.slice(0,18)}</div>
 
-    <div style="margin-bottom:10px">
-      <div style="font-size:10px;color:var(--ts);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px">Setup / Reason</div>
-      <div style="display:flex;flex-wrap:wrap">
-        ${["Breakout","Pullback","Trend","Reversal","Scalping","ORB","VWAP","Random","Emotional"].map(s=>
-          `<button class="chip${t.setup===s?' on':''}" onclick="tjSet('${t.id}','setup','${s}')">${s}</button>`).join('')}
-      </div>
+    <div class="j-q">Exit Type</div>
+    <div style="display:flex;flex-wrap:wrap">
+      ${["Target Hit","Stop Loss Hit","Manual Exit"].map(e=>`<button class="chip${t.exitType===e?" on-"+(e==="Target Hit"?"g":e==="Stop Loss Hit"?"r":"a"):""}" onclick="tjSet('${t.id}','exitType','${e}')">${e}</button>`).join('')}
     </div>
 
-    <div style="margin-bottom:10px">
-      <div style="font-size:10px;color:var(--ts);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px">Outcome</div>
-      <div style="display:flex;flex-wrap:wrap">
-        ${[["Full Success","on-g"],["Partial","on-a"],["Followed Plan","on-a"],["Mistake","on-r"]].map(([lbl,cl])=>
-          `<button class="chip${t.outcome===lbl?' '+cl:''}" onclick="tjSet('${t.id}','outcome','${lbl}')">${lbl}</button>`).join('')}
-      </div>
+    <div class="j-q">Setup / Why taken?</div>
+    <div style="display:flex;flex-wrap:wrap">
+      ${["Breakout","Pullback","Trend Following","Reversal","Scalping","ORB","VWAP Rejection","Random","Emotional"].map(s=>`<button class="chip${t.setup===s?" on":""}" onclick="tjSet('${t.id}','setup','${s}')">${s}</button>`).join('')}
     </div>
 
-    <div style="margin-bottom:10px">
-      <div style="font-size:10px;color:var(--ts);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px">Emotion</div>
-      <div style="display:flex;flex-wrap:wrap">
-        ${["Calm","Frustrated","Overconfident","Impatient","Anxious","Revenge"].map(e=>
-          `<button class="chip${t.emotion===e?' '+emoColor(e):''}" onclick="tjSet('${t.id}','emotion','${e}')">${e}</button>`).join('')}
-      </div>
+    <div class="j-q">How did it go?</div>
+    <div style="display:flex;flex-wrap:wrap">
+      ${[["Full Success","on-g"],["Partial Success","on-a"],["Followed Plan","on-a"],["Mistake","on-r"]].map(([lbl,cl])=>`<button class="chip${t.outcome===lbl?" "+cl:""}" onclick="tjSet('${t.id}','outcome','${lbl}')">${lbl}</button>`).join('')}
     </div>
 
-    <div style="margin-bottom:10px">
-      <div style="font-size:10px;color:var(--ts);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px">Confidence: <span class="mono" style="color:var(--purL)">${t.confidence||5}/10</span></div>
-      <input type="range" min="1" max="10" value="${t.confidence||5}" oninput="tjSet('${t.id}','confidence',parseInt(this.value))"/>
+    <div class="j-q">Emotional State</div>
+    <div style="display:flex;flex-wrap:wrap">
+      ${["Calm","Frustrated","Overconfident","Impatient","Anxious","Revenge"].map(e=>`<button class="chip${t.emotion===e?" "+ec(e):""}" onclick="tjSet('${t.id}','emotion','${e}')">${e}</button>`).join('')}
     </div>
 
-    <div style="margin-bottom:12px">
-      <div style="font-size:10px;color:var(--ts);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px">Lesson Learned</div>
-      <textarea id="ls_${t.id}" placeholder="What did you learn from this trade?" style="width:100%;min-height:70px;background:var(--bg);border:1px solid var(--brd2);border-radius:10px;color:var(--tp);padding:10px;font-size:13px;resize:vertical;box-sizing:border-box;line-height:1.5">${t.lesson||""}</textarea>
+    <div class="j-q">What went wrong?</div>
+    <div style="display:flex;flex-wrap:wrap">
+      ${["Overtrading","Revenge Trading","Exited Too Early","Exited Too Late","FOMO Entry","No Clear Plan","No Mistake"].map(m=>`<button class="chip${(t.mistakes||[]).includes(m)?(m==="No Mistake"?" on-g":" on-r"):""}" onclick="tjMistake('${t.id}','${m}')">${m}</button>`).join('')}
     </div>
 
-    <div style="display:flex;gap:8px">
-      <button onclick="saveJ('${t.id}')" style="flex:1;padding:11px;background:linear-gradient(135deg,var(--pur),var(--purD));border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">✓ Save</button>
-      <button onclick="toggleJ(null)" style="padding:11px 16px;background:var(--s3);border:none;border-radius:10px;color:var(--ts);font-size:13px;cursor:pointer;font-family:'Syne',sans-serif">Cancel</button>
+    <div class="j-q">Grade this trade</div>
+    <div style="display:flex;flex-wrap:wrap">
+      ${["A+","A","B+","B","C","D"].map(g=>`<button class="chip${t.grade===g?" on":""}" style="${t.grade===g?"border-color:"+gHex(g)+";background:"+gHex(g)+"22;color:"+gHex(g):""}" onclick="tjSet('${t.id}','grade','${g}')">${g}</button>`).join('')}
+    </div>
+
+    <div class="j-q">Confidence: <span class="mono" style="color:var(--purL)">${t.confidence||5}/10</span></div>
+    <input type="range" min="1" max="10" value="${t.confidence||5}" oninput="tjSet('${t.id}','confidence',parseInt(this.value))"/>
+
+    <div class="j-q">Hold Time (minutes)</div>
+    <input type="number" id="ht_${t.id}" value="${t.holdTime||""}" placeholder="e.g. 45" min="0" style="width:100%;background:var(--bg);border:1px solid var(--brd2);border-radius:8px;color:var(--tp);padding:9px 12px;font-size:13px;font-family:'DM Mono',monospace"/>
+
+    <div class="j-q" style="margin-top:12px">Lesson Learned</div>
+    <textarea id="ls_${t.id}" placeholder="What did you learn from this trade?" style="width:100%;min-height:75px;background:var(--bg);border:1px solid var(--brd2);border-radius:10px;color:var(--tp);padding:10px;font-size:13px;resize:vertical;box-sizing:border-box;line-height:1.5">${t.lesson||""}</textarea>
+
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button onclick="saveJ('${t.id}')" style="flex:1;padding:12px;background:linear-gradient(135deg,var(--pur),var(--purD));border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">✓ Save Journal</button>
+      <button onclick="toggleJ(null)" style="padding:12px 16px;background:var(--s3);border:none;border-radius:10px;color:var(--ts);font-size:13px;cursor:pointer;font-family:'Syne',sans-serif">Cancel</button>
     </div>
   </div>`;
 }
 
 // ── ANALYTICS ─────────────────────────────────────────────────────────────────
 function rAnal(){
-  const t=S.trades;
-  if(!t.length) return`<div class="screen"><div style="font-size:24px;font-weight:800;margin-bottom:24px">Analytics</div>
-    <div style="text-align:center;padding:60px 20px">
-      <div style="font-size:48px;margin-bottom:16px">📊</div>
-      <div style="font-size:16px;font-weight:700;margin-bottom:8px">No Data Yet</div>
-      <div style="font-size:13px;color:var(--ts);margin-bottom:20px">Sync Dhan to load your trading data</div>
-      <button onclick="go('dashboard')" class="btn btn-pur" style="width:auto;padding:12px 28px">Go Sync →</button>
-    </div></div>`;
+  const mg=getMonthGroups(S.trades);
+  const months=Object.keys(mg).sort().reverse();
+  if(!months.length&&!S.trades.length) return`<div class="screen"><div style="font-size:24px;font-weight:800;margin-bottom:20px">Analytics</div>
+    <div style="text-align:center;padding:60px 20px"><div style="font-size:40px;margin-bottom:12px">📊</div><div style="font-size:14px;font-weight:700;margin-bottom:6px">No Data Yet</div><button onclick="go('dashboard')" style="margin-top:12px;padding:11px 24px;background:var(--pur);border:none;border-radius:12px;color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">Go Sync Dhan</button></div></div>`;
 
-  const closedPnL=t.reduce((a,x)=>a+(x.realizedPnl||0),0);
-  const openPnL=t.reduce((a,x)=>a+(x.unrealizedPnl||0),0);
-  const totalPnL=closedPnL+openPnL;
-  const closed=t.filter(x=>x.isClosed!==false);
-  const wins=closed.filter(x=>(x.realizedPnl||0)>0),losses=closed.filter(x=>(x.realizedPnl||0)<0);
-  const wr=closed.length?Math.round((wins.length/closed.length)*100):0;
-  const avgW=wins.length?wins.reduce((a,x)=>a+(x.realizedPnl||0),0)/wins.length:0;
-  const avgL=losses.length?Math.abs(losses.reduce((a,x)=>a+(x.realizedPnl||0),0)/losses.length):1;
-  const rr=(avgW/avgL).toFixed(2);
-  const pf=losses.length?(avgW*wins.length/(avgL*losses.length)).toFixed(2):"∞";
-  const beh=calcBehavior(t);
+  // Ensure selected month is valid
+  const sel=months.includes(S.selMonth)?S.selMonth:(months[0]||curMonthKey());
+  const selIdx=months.indexOf(sel);
+  const curTrades=mg[sel]||S.trades;
+  const prevKey=months[selIdx+1]||null;
+  const prevTrades=prevKey?mg[prevKey]:[];
+  const A=calcAnalytics(curTrades);
+  const P=calcAnalytics(prevTrades);
 
-  const syms=[...new Set(t.map(x=>x.symbol.split("-")[0].split(" ")[0]))].slice(0,6);
-  const symS=syms.map(s=>{const tr=t.filter(x=>x.symbol.startsWith(s));const w=tr.filter(x=>(x.realizedPnl||0)>0).length;const spnl=tr.reduce((a,x)=>a+(x.realizedPnl||0),0);return{s:s.slice(0,10),wr:tr.length?Math.round((w/tr.length)*100):0,pnl:spnl};});
-  const emoD=["Calm","Frustrated","Overconfident","Anxious","Impatient","Revenge"].map(e=>({e,c:t.filter(x=>x.emotion===e).length})).filter(x=>x.c>0);
-  const maxE=Math.max(...emoD.map(x=>x.c),1);
+  // Monthly summary table data
+  const monthRows=months.map(mk=>{
+    const mt=mg[mk]||[];
+    const pnl=mt.reduce((a,t)=>a+(t.realizedPnl||0)+(t.unrealizedPnl||0),0);
+    const brok=mt.reduce((a,t)=>a+estBrokerage(t),0);
+    const w=mt.filter(t=>(t.realizedPnl||0)>0).length;
+    const wr=mt.length?Math.round((w/mt.length)*100):0;
+    return{mk,label:monthLabel(mk),trades:mt.length,pnl,brok,wr};
+  });
+
+  const tblRow=(label,cur,prev,isCur=false)=>`<tr>
+    <td style="color:var(--ts)">${label}</td>
+    <td class="val" style="text-align:right;color:${isCur?(parseFloat(cur)>=0?"var(--grn)":"var(--red)"):"var(--tp)"}">${cur}</td>
+    <td class="val" style="text-align:right;color:var(--ts)">${prev||"—"}</td>
+  </tr>`;
+
+  const setupArr=Object.entries(A.setups).sort((a,b)=>b[1].n-a[1].n);
+  const emoArr=Object.entries(A.emos).sort((a,b)=>b[1]-a[1]);
+  const maxEmo=Math.max(...emoArr.map(x=>x[1]),1);
 
   return`<div class="screen">
     <div style="font-size:24px;font-weight:800;margin-bottom:18px">Analytics</div>
 
-    <!-- KPI GRID -->
-    <div class="grid-2" style="margin-bottom:12px">
-      <div class="card" style="padding:16px;text-align:center">
-        <div class="label" style="margin-bottom:6px">Total P&L</div>
-        <div class="mono ${pnlC(totalPnL)}" style="font-size:20px;font-weight:800">${fmt.pnl(totalPnL)}</div>
-      </div>
-      <div class="card" style="padding:16px;text-align:center">
-        <div class="label" style="margin-bottom:6px">Win Rate</div>
-        <div class="mono" style="font-size:20px;font-weight:800;color:${wr>=60?"var(--grn)":"var(--amb)"}">${wr}%</div>
-        <div style="font-size:10px;color:var(--ts);margin-top:3px">${wins.length}W · ${losses.length}L</div>
-      </div>
-    </div>
-    <div class="grid-2" style="margin-bottom:12px">
-      <div class="card" style="padding:16px;text-align:center">
-        <div class="label" style="margin-bottom:6px">Avg R:R</div>
-        <div class="mono" style="font-size:20px;font-weight:800;color:${parseFloat(rr)>=1.5?"var(--grn)":"var(--amb)"}">${rr}</div>
-        <div style="font-size:10px;color:var(--ts);margin-top:3px">Avg Win ₹${fmt.num(avgW)}</div>
-      </div>
-      <div class="card" style="padding:16px;text-align:center">
-        <div class="label" style="margin-bottom:6px">Profit Factor</div>
-        <div class="mono" style="font-size:20px;font-weight:800;color:${parseFloat(pf)>=1.5?"var(--grn)":"var(--amb)"}">${pf}</div>
-        <div style="font-size:10px;color:var(--ts);margin-top:3px">Avg Loss ₹${fmt.num(avgL)}</div>
-      </div>
-    </div>
-
-    <!-- P&L BREAKDOWN -->
+    <!-- MONTH SELECTOR -->
     <div class="card">
-      <div style="font-size:13px;font-weight:700;margin-bottom:14px">P&L Breakdown</div>
-      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--brd)">
-        <span style="font-size:12px;color:var(--ts)">Realized (Closed positions)</span>
-        <span class="mono ${pnlC(closedPnL)}" style="font-size:14px;font-weight:700">${fmt.pnl(closedPnL)}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--brd)">
-        <span style="font-size:12px;color:var(--ts)">Unrealized (Open positions)</span>
-        <span class="mono ${pnlC(openPnL)}" style="font-size:14px;font-weight:700">${fmt.pnl(openPnL)}</span>
-      </div>
-      <div style="display:flex;justify-content:space-between;padding:10px 0">
-        <span style="font-size:13px;font-weight:700;color:var(--tp)">Net Total</span>
-        <span class="mono ${pnlC(totalPnL)}" style="font-size:16px;font-weight:800">${fmt.pnl(totalPnL)}</span>
-      </div>
-    </div>
-
-    <!-- SYMBOL BREAKDOWN -->
-    ${symS.length?`<div class="card">
-      <div style="font-size:13px;font-weight:700;margin-bottom:14px">Symbol Performance</div>
-      ${symS.map(s=>`<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-        <div style="width:70px;font-size:11px;color:var(--ts);font-weight:600">${s.s}</div>
-        <div style="flex:1">
-          <div class="bar-wrap"><div class="bar-fill" style="width:${s.wr}%;background:${s.wr>=70?"var(--grn)":s.wr>=50?"var(--amb)":"var(--red)"}"></div></div>
+      <div class="month-nav">
+        <button class="month-btn" onclick="prevMonth(${JSON.stringify(months)})">‹</button>
+        <div style="text-align:center">
+          <div style="font-size:14px;font-weight:700">${monthLabel(sel)}</div>
+          <div style="font-size:11px;color:var(--ts)">${curTrades.length} trades</div>
         </div>
-        <div class="mono" style="font-size:11px;color:${s.wr>=70?"var(--grn)":s.wr>=50?"var(--amb)":"var(--red)"};width:30px;text-align:right">${s.wr}%</div>
-        <div class="mono ${pnlC(s.pnl)}" style="font-size:11px;width:70px;text-align:right">${fmt.pnl(s.pnl)}</div>
-      </div>`).join('')}
-    </div>`:""}
-
-    <!-- BEHAVIOUR SCORE -->
-    <div class="card">
-      <div style="font-size:13px;font-weight:700;margin-bottom:14px">Behaviour Score</div>
-      ${MBar("Risk Control",30,beh.rc)}
-      ${MBar("Discipline",25,beh.disc)}
-      ${MBar("Consistency",20,beh.cons)}
-      ${MBar("Exec Quality",15,beh.eq)}
-      ${MBar("Win Ratio",10,beh.wr)}
+        <button class="month-btn" onclick="nextMonth(${JSON.stringify(months)})">›</button>
+      </div>
+      <!-- Monthly summary -->
+      <div style="overflow-x:auto">
+        <table class="tbl" style="min-width:100%">
+          <thead><tr>
+            <th style="text-align:left">Month</th>
+            <th style="text-align:right">Trades</th>
+            <th style="text-align:right">P&L</th>
+            <th style="text-align:right">Charges</th>
+            <th style="text-align:right">Win%</th>
+          </tr></thead>
+          <tbody>
+            ${monthRows.slice(0,6).map(r=>`<tr style="${r.mk===sel?"background:rgba(99,102,241,0.08);":""}">
+              <td style="color:${r.mk===sel?"var(--purL)":"var(--ts)"};font-weight:${r.mk===sel?700:400};font-size:11px">${r.label.split(" ")[0]+" "+r.label.split(" ")[1].slice(2)}</td>
+              <td class="val" style="text-align:right;font-size:12px">${r.trades}</td>
+              <td class="val" style="text-align:right;font-size:12px;color:${pHex(r.pnl)}">${fmt.pnl(r.pnl)}</td>
+              <td class="val" style="text-align:right;font-size:12px;color:var(--red)">-₹${r.brok}</td>
+              <td class="val" style="text-align:right;font-size:12px;color:${r.wr>=60?"var(--grn)":"var(--amb)"}">${r.wr}%</td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <!-- EMOTION FREQUENCY -->
-    ${emoD.length?`<div class="card">
-      <div style="font-size:13px;font-weight:700;margin-bottom:14px">Emotional Frequency</div>
-      ${emoD.map(x=>{const c=x.e==="Calm"?"var(--grn)":["Frustrated","Overconfident","Revenge"].includes(x.e)?"var(--red)":"var(--amb)";return`<div style="display:flex;align-items:center;gap:10px;margin-bottom:9px">
-        <div style="width:80px;font-size:11px;color:var(--ts)">${x.e}</div>
-        <div style="flex:1"><div class="bar-wrap"><div class="bar-fill" style="width:${(x.c/maxE)*100}%;background:${c}"></div></div></div>
-        <div class="mono" style="font-size:11px;color:${c};width:20px;text-align:right">${x.c}</div>
-      </div>`;}).join('')}
+    <!-- PROFITABILITY INSIGHTS -->
+    <div class="card">
+      <div class="section-h">💰 Profitability Insights</div>
+      <table class="tbl">
+        <thead><tr><th style="text-align:left">Metric</th><th style="text-align:right;color:var(--purL)">${monthLabel(sel).split(" ")[0]}</th><th style="text-align:right">${prevKey?monthLabel(prevKey).split(" ")[0]:"Last Month"}</th></tr></thead>
+        <tbody>
+          ${tblRow("Highest Profit Trade",A.highPnl>0?fmt.pnl(A.highPnl):"—",P.highPnl>0?fmt.pnl(P.highPnl):"—",true)}
+          ${tblRow("Highest Loss Trade",A.lowPnl<0?fmt.pnl(A.lowPnl):"—",P.lowPnl<0?fmt.pnl(P.lowPnl):"—",true)}
+          ${tblRow("Avg Profit/Trade",A.total?fmt.pnl(A.netPnL/A.total):"—",P.total?fmt.pnl(P.netPnL/P.total):"—",true)}
+          ${tblRow("Net P&L",fmt.pnl(A.netPnL),P.total?fmt.pnl(P.netPnL):"—",true)}
+          ${tblRow("Est. Charges","−₹"+A.totalBrok,P.total?"−₹"+P.totalBrok:"—")}
+          ${tblRow("Net After Charges",fmt.pnl(A.netPnL-A.totalBrok),P.total?fmt.pnl(P.netPnL-P.totalBrok):"—",true)}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- P&L BREAKDOWN with brokerage -->
+    <div class="card">
+      <div class="section-h">📊 P&L Breakdown</div>
+      ${[
+        ["Realized (Closed)",curTrades.reduce((a,t)=>a+(t.realizedPnl||0),0),true],
+        ["Unrealized (Open)",curTrades.reduce((a,t)=>a+(t.unrealizedPnl||0),0),true],
+        ["Gross P&L",A.netPnL,true],
+        ["Est. Brokerage",-A.totalBrok*0.5,false,"~₹"+Math.round(A.totalBrok*0.5)+" brok"],
+        ["STT + Exchange Charges",-A.totalBrok*0.5,false,"~₹"+Math.round(A.totalBrok*0.5)+" taxes"],
+        ["Net P&L (after all charges)",A.netPnL-A.totalBrok,true],
+      ].map(([l,v,signed,note])=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--brd)">
+        <span style="font-size:12px;color:var(--ts)">${l}</span>
+        <span class="mono" style="font-size:13px;font-weight:700;color:${signed?pHex(v):"var(--red)"}">${note||fmt.pnl(v)}</span>
+      </div>`).join('')}
+    </div>
+
+    <!-- RISK MANAGEMENT -->
+    <div class="card">
+      <div class="section-h">⚖️ Risk Management</div>
+      <table class="tbl">
+        <thead><tr><th style="text-align:left">Metric</th><th style="text-align:right;color:var(--purL)">${monthLabel(sel).split(" ")[0]}</th><th style="text-align:right">Last</th></tr></thead>
+        <tbody>
+          ${tblRow("Avg Risk/Reward",A.avgRR,P.total?P.avgRR:"—")}
+          ${tblRow("Avg Win",A.avgW>0?fmt.pnl(A.avgW):"—",P.avgW>0?fmt.pnl(P.avgW):"—",true)}
+          ${tblRow("Avg Loss",A.avgL>0?fmt.pnl(-A.avgL):"—",P.avgL>0?fmt.pnl(-P.avgL):"—",true)}
+          ${tblRow("Win Rate",A.total?A.wins+"/"+A.total+" ("+Math.round(A.wins/A.total*100)+"%)":"—",P.total?P.wins+"/"+P.total+" ("+Math.round(P.wins/P.total*100)+"%)":"—")}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- STRATEGY PERFORMANCE (bar card style) -->
+    ${setupArr.length?`<div class="card">
+      <div class="section-h">📈 Strategy Performance</div>
+      ${setupArr.map(([s,d])=>{
+        const wr=d.n?Math.round((d.w/d.n)*100):0;
+        const c=wr>=70?"var(--grn)":wr>=50?"var(--amb)":"var(--red)";
+        return`<div style="margin-bottom:10px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:12px;color:var(--ts)">${s} <span style="color:var(--tm)">${d.n} trades</span></span>
+            <div style="display:flex;gap:10px;align-items:center">
+              <span class="mono" style="font-size:11px;color:${pHex(d.pnl)}">${fmt.pnl(d.pnl)}</span>
+              <span class="mono" style="font-size:11px;color:${c};font-weight:700">${wr}%</span>
+            </div>
+          </div>
+          <div class="bar-wrap"><div class="bar-fill" style="width:${wr}%;background:linear-gradient(90deg,${c}88,${c})"></div></div>
+        </div>`;}).join('')}
     </div>`:""}
+
+    <!-- EMOTIONAL ANALYSIS -->
+    ${emoArr.length?`<div class="card">
+      <div class="section-h">🧠 Emotional Analysis</div>
+      <table class="tbl">
+        <thead><tr><th style="text-align:left">Emotion</th><th style="text-align:right;color:var(--purL)">Count</th><th style="text-align:right">%</th></tr></thead>
+        <tbody>
+          ${emoArr.map(([e,c])=>{
+            const clr=e==="Calm"?"var(--grn)":["Frustrated","Overconfident","Revenge"].includes(e)?"var(--red)":"var(--amb)";
+            return`<tr>
+              <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${clr};margin-right:6px"></span>${e}</td>
+              <td class="val" style="text-align:right;color:${clr}">${c}</td>
+              <td class="val" style="text-align:right;color:var(--ts)">${A.total?Math.round(c/A.total*100):0}%</td>
+            </tr>`;}).join('')}
+        </tbody>
+      </table>
+    </div>`:""}
+
+    <!-- PLAN EXECUTION -->
+    ${Object.keys(A.outcomes).length?`<div class="card">
+      <div class="section-h">🎯 Plan Execution</div>
+      <table class="tbl">
+        <thead><tr><th style="text-align:left">Outcome</th><th style="text-align:right;color:var(--purL)">Count</th><th style="text-align:right">%</th></tr></thead>
+        <tbody>
+          ${Object.entries(A.outcomes).sort((a,b)=>b[1]-a[1]).map(([o,c])=>{
+            const clr=o==="Full Success"?"var(--grn)":o==="Mistake"?"var(--red)":"var(--amb)";
+            return`<tr><td style="color:${clr}">${o}</td><td class="val" style="text-align:right;color:${clr}">${c}</td><td class="val" style="text-align:right;color:var(--ts)">${A.total?Math.round(c/A.total*100):0}%</td></tr>`;}).join('')}
+        </tbody>
+      </table>
+    </div>`:""}
+
+    <!-- DAY-WISE WIN RATIO -->
+    ${Object.keys(A.dw).length?`<div class="card">
+      <div class="section-h">📅 Day-wise Performance</div>
+      <table class="tbl">
+        <thead><tr><th style="text-align:left">Day</th><th style="text-align:right">Trades</th><th style="text-align:right;color:var(--purL)">Win%</th><th style="text-align:right">P&L</th></tr></thead>
+        <tbody>
+          ${["Mon","Tue","Wed","Thu","Fri"].filter(d=>A.dw[d]).map(d=>{
+            const x=A.dw[d];const wr=Math.round((x.w/x.n)*100);
+            return`<tr>
+              <td style="font-weight:600">${d}</td>
+              <td class="val" style="text-align:right">${x.n}</td>
+              <td class="val" style="text-align:right;color:${wr>=60?"var(--grn)":"var(--amb)"}">${wr}%</td>
+              <td class="val" style="text-align:right;color:${pHex(x.pnl)}">${fmt.pnl(x.pnl)}</td>
+            </tr>`;}).join('')}
+        </tbody>
+      </table>
+    </div>`:""}
+
+    <!-- TRADE TIMING -->
+    <div class="card">
+      <div class="section-h">⏱ Trade Timing</div>
+      <table class="tbl">
+        <thead><tr><th style="text-align:left">Metric</th><th style="text-align:right;color:var(--purL)">Value</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--ts)">Avg Hold Time</td><td class="val" style="text-align:right">${A.avgHold>0?A.avgHold+" min":"—"}</td></tr>
+          <tr><td style="color:var(--ts)">Longest Trade</td><td class="val" style="text-align:right">${A.maxHold>0?A.maxHold+" min":"—"}</td></tr>
+          ${A.exits.length?Object.entries(A.exits).map(([e,c])=>`<tr><td style="color:var(--ts)">${e}</td><td class="val" style="text-align:right">${c} trades</td></tr>`).join(''):""}
+        </tbody>
+      </table>
+    </div>
+
   </div>`;
 }
 
 // ── SETTINGS ──────────────────────────────────────────────────────────────────
-function rSettings(){
-  const ts=S.testStatus;
+function rSet(){
+  const ts=S.testStatus;const c=S.cfg;
   return`<div class="screen">
     <div style="font-size:24px;font-weight:800;margin-bottom:6px">Settings</div>
-    <div style="font-size:12px;color:var(--ts);margin-bottom:20px">Token secured in Netlify — not exposed to browser</div>
+    <div style="font-size:12px;color:var(--ts);margin-bottom:20px">Configure your trading parameters</div>
 
-    <div class="card" style="border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.04)">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-        <div style="width:36px;height:36px;border-radius:10px;background:rgba(16,185,129,0.15);display:flex;align-items:center;justify-content:center;font-size:18px">🔐</div>
-        <div>
-          <div style="font-size:14px;font-weight:700;color:var(--grnL)">Secure Connection</div>
-          <div style="font-size:11px;color:var(--ts)">Server-side proxy via Netlify Functions</div>
+    <!-- TRADING CONFIG -->
+    <div class="card">
+      <div style="font-size:14px;font-weight:700;margin-bottom:16px">🎯 Trading Parameters</div>
+      ${[
+        {label:"Capital (₹)",key:"capital",min:10000,max:500000,step:5000},
+        {label:"Daily Loss Limit (₹)",key:"dailyLoss",min:500,max:10000,step:100},
+        {label:"Daily Target (₹)",key:"dailyTarget",min:500,max:50000,step:500},
+        {label:"Max Trades/Day",key:"maxTrades",min:1,max:10,step:1},
+      ].map(p=>`<div style="margin-bottom:18px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+          <span style="font-size:13px">${p.label}</span>
+          <span class="mono" id="cv_${p.key}" style="font-size:14px;font-weight:700;color:var(--purL)">${p.key==="capital"?"₹"+c[p.key].toLocaleString("en-IN"):p.key==="maxTrades"?c[p.key]:"₹"+c[p.key].toLocaleString("en-IN")}</span>
         </div>
-      </div>
-      <div style="font-size:12px;color:var(--ts);line-height:2;background:var(--s2);border-radius:10px;padding:12px">
-        To update credentials:<br/>
-        1. <strong style="color:var(--tp)">netlify.com</strong> → your site<br/>
-        2. <strong style="color:var(--tp)">Site config → Environment variables</strong><br/>
-        3. Update <code style="color:var(--purL);background:var(--s3);padding:1px 5px;border-radius:4px">DHAN_TOKEN</code> and <code style="color:var(--purL);background:var(--s3);padding:1px 5px;border-radius:4px">DHAN_CLIENT_ID</code><br/>
-        4. <strong style="color:var(--tp)">Deploys → Trigger deploy</strong>
-      </div>
+        <input type="range" min="${p.min}" max="${p.max}" step="${p.step}" value="${c[p.key]}"
+          oninput="cfgSlide('${p.key}',this.value,${JSON.stringify(p)})"/>
+      </div>`).join('')}
+      <button onclick="saveCfg()" style="width:100%;padding:12px;background:linear-gradient(135deg,var(--pur),var(--purD));border:none;border-radius:12px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">Save Configuration</button>
     </div>
 
+    <!-- CONNECTION -->
     <div class="card">
-      <div style="font-size:14px;font-weight:700;margin-bottom:14px">Connection Status</div>
-      <button onclick="testAPI()" style="width:100%;padding:14px;background:${ts==="ok"?"rgba(16,185,129,0.15)":ts==="error"?"rgba(239,68,68,0.12)":"var(--s2)"};border:1px solid ${ts==="ok"?"var(--grn)":ts==="error"?"var(--red)":"var(--brd2)"};border-radius:12px;color:${ts==="ok"?"var(--grnL)":ts==="error"?"var(--redL)":"var(--tp)"};font-size:14px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif;transition:all 0.2s">
-        ${ts==="testing"?`<span class="spin" style="display:inline-block">↻</span> Testing connection…`:ts==="ok"?"✓ Connected to Dhan API":ts==="error"?"✗ Not Connected — Check Netlify Variables":"Test Dhan Connection"}
+      <div style="font-size:14px;font-weight:700;margin-bottom:14px">🔐 Dhan API Connection</div>
+      <div style="font-size:12px;color:var(--ts);line-height:1.9;background:var(--s2);border-radius:10px;padding:12px;margin-bottom:14px">
+        Token stored securely in Netlify env vars<br/>
+        Update: <strong style="color:var(--tp)">netlify.com → Site config → Environment variables</strong><br/>
+        Keys: <code style="color:var(--purL);background:var(--s3);padding:1px 5px;border-radius:4px">DHAN_TOKEN</code> + <code style="color:var(--purL);background:var(--s3);padding:1px 5px;border-radius:4px">DHAN_CLIENT_ID</code>
+      </div>
+      <button onclick="testAPI()" style="width:100%;padding:13px;background:${ts==="ok"?"rgba(16,185,129,0.15)":ts==="error"?"rgba(239,68,68,0.12)":"var(--s2)"};border:1px solid ${ts==="ok"?"var(--grn)":ts==="error"?"var(--red)":"var(--brd2)"};border-radius:12px;color:${ts==="ok"?"var(--grnL)":ts==="error"?"var(--redL)":"var(--tp)"};font-size:14px;font-weight:700;cursor:pointer;font-family:'Syne',sans-serif">
+        ${ts==="testing"?`<span class="spin">↻</span> Testing…`:ts==="ok"?"✓ Connected to Dhan API":ts==="error"?"✗ Not Connected":"Test Dhan Connection"}
       </button>
-      ${ts==="ok"?`<div style="margin-top:10px;display:flex;align-items:center;gap:8px">
-        <div class="live-dot"></div>
-        <span style="font-size:12px;color:var(--grnL)">API is live and responding</span>
-      </div>`:""}
     </div>
 
-    <div class="card">
-      <div style="font-size:14px;font-weight:700;margin-bottom:4px">About</div>
-      <div style="font-size:12px;color:var(--ts);line-height:1.8;margin-bottom:14px">
-        <em style="color:var(--purL);font-size:13px">"Trade with discipline, not emotion."</em><br/>
-        Niyam TradeOS v2.0 · Personal institutional-grade trading OS<br/>
-        Powered by Dhan API v2
-      </div>
-    </div>
+    <button onclick="clearData()" style="width:100%;padding:12px;background:transparent;border:1px solid rgba(239,68,68,0.3);border-radius:12px;color:var(--redL);font-size:13px;font-weight:600;cursor:pointer;font-family:'Syne',sans-serif;margin-bottom:14px">🗑 Clear All Saved Data</button>
 
-    <button onclick="clearData()" style="width:100%;padding:13px;background:transparent;border:1px solid rgba(239,68,68,0.3);border-radius:12px;color:var(--redL);font-size:13px;font-weight:600;cursor:pointer;font-family:'Syne',sans-serif">
-      🗑 Clear All Saved Data
-    </button>
+    <div class="card"><div style="font-size:13px;font-weight:700;margin-bottom:6px">Niyam TradeOS v2.1</div>
+    <div style="font-size:12px;color:var(--ts);line-height:1.7"><em style="color:var(--purL)">"Trade with discipline, not emotion."</em><br/>Powered by Dhan API v2</div></div>
   </div>`;
 }
 
-// ── EVENTS ────────────────────────────────────────────────────────────────────
-function bind(){
-  const ta=document.getElementById('jlesson');
-  if(ta) ta.addEventListener('input',e=>S.j.lesson=e.target.value);
-}
+// ── EVENT HANDLERS ────────────────────────────────────────────────────────────
+function bind(){}
 
 window.go=(s)=>set({screen:s,testStatus:null,syncMsg:"",openJournal:null});
 window.setF=(f)=>set({filter:f,openJournal:null});
 window.toggleJ=(id)=>set({openJournal:S.openJournal===id?null:id});
 
+window.prevMonth=(months)=>{
+  const idx=months.indexOf(S.selMonth);
+  if(idx<months.length-1)set({selMonth:months[idx+1]});
+};
+window.nextMonth=(months)=>{
+  const idx=months.indexOf(S.selMonth);
+  if(idx>0)set({selMonth:months[idx-1]});
+};
+
 window.syncDhan=async()=>{
   set({syncing:true,syncMsg:""});
   try{
-    const [fund,trades]=await Promise.all([dhanCall("/fundlimit"),dhanCall("/allpositions")]);
-    save('nf',fund);
+    const[fund,trades]=await Promise.all([dhanCall("/fundlimit"),dhanCall("/allpositions")]);
+    sv('nf',fund);
     if(Array.isArray(trades)){
-      const prev=S.trades.filter(t=>t.lesson||t.emotion||t.setup);
+      const prev=S.trades.filter(t=>t.lesson||t.emotion||t.setup||t.grade||t.exitType||t.holdTime);
       const merged=trades.map(t=>{
         const p=prev.find(e=>e.symbol===t.symbol&&e.date===t.date);
-        return p?{...t,setup:p.setup,emotion:p.emotion,lesson:p.lesson,confidence:p.confidence,grade:p.grade,outcome:p.outcome}:t;
+        return p?{...t,setup:p.setup,emotion:p.emotion,lesson:p.lesson,confidence:p.confidence,
+          grade:p.grade,outcome:p.outcome,exitType:p.exitType,holdTime:p.holdTime,
+          mistakes:p.mistakes,sl:p.sl}:t;
       });
-      save('nt',merged);
-      set({syncing:false,fund,trades:merged,syncMsg:`✓ Synced successfully · ${merged.length} positions loaded`});
-    } else {
-      set({syncing:false,fund,syncMsg:"✓ Funds synced (no positions found)"});
+      sv('nt',merged);
+      set({syncing:false,fund,trades:merged,syncMsg:`✓ Synced · ${merged.length} positions · Funds updated`});
+    }else{
+      set({syncing:false,fund,syncMsg:"✓ Funds synced"});
     }
     setTimeout(()=>set({syncMsg:""}),5000);
   }catch(e){set({syncing:false,syncMsg:`✗ ${e.message}`});}
 };
 
 window.tjSet=(tid,key,val)=>{
-  const trades=S.trades.map(t=>t.id==tid?{...t,[key]:t[key]===val?"":val}:t);
-  save('nt',trades);
-  set({trades});
+  const trades=S.trades.map(t=>t.id==tid?{...t,[key]:t[key]===val&&key!=="confidence"?"":val}:t);
+  sv('nt',trades);set({trades});
+};
+
+window.tjMistake=(tid,m)=>{
+  const trades=S.trades.map(t=>{
+    if(t.id!=tid)return t;
+    let ms=t.mistakes||[];
+    if(m==="No Mistake"){ms=["No Mistake"];}
+    else{ms=ms.includes(m)?ms.filter(x=>x!==m):[...ms.filter(x=>x!=="No Mistake"),m];}
+    return{...t,mistakes:ms};
+  });
+  sv('nt',trades);set({trades});
 };
 
 window.saveJ=(tid)=>{
-  const el=document.getElementById(`ls_${tid}`);
-  const lesson=el?el.value:"";
+  const lesson=document.getElementById(`ls_${tid}`)?.value||"";
+  const holdTime=parseInt(document.getElementById(`ht_${tid}`)?.value||0)||0;
   const trades=S.trades.map(t=>{
-    if(t.id==tid){
-      const grade=t.outcome==="Full Success"?"A":t.outcome==="Partial"?"B+":t.outcome==="Mistake"?"D":t.grade||"B";
-      return{...t,lesson,grade};
-    }
-    return t;
+    if(t.id!=tid)return t;
+    const grade=t.grade||(t.outcome==="Full Success"?"A":t.outcome==="Mistake"?"D":"B");
+    return{...t,lesson,holdTime,grade};
   });
-  save('nt',trades);
+  sv('nt',trades);
   set({trades,openJournal:null});
   const toast=document.createElement('div');
   toast.style.cssText=`position:fixed;top:24px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#6366F1,#4338CA);color:#fff;padding:12px 24px;border-radius:12px;font-weight:700;z-index:9999;font-family:'Syne',sans-serif;font-size:14px;box-shadow:0 8px 32px rgba(99,102,241,0.4)`;
-  toast.textContent="✓ Journal saved!";
-  document.body.appendChild(toast);
+  toast.textContent="✓ Journal saved!";document.body.appendChild(toast);
   setTimeout(()=>toast.remove(),2500);
 };
 
-window.jset=(key,val)=>{const j={...S.j};j[key]=j[key]===val?"":val;set({j});};
-window.jscale=(key,val)=>{const j={...S.j};j[key]=val;set({j});};
-window.jtoggle=(m)=>{const j={...S.j};if(m==="No Mistake"){j.mistakes=["No Mistake"];}else{j.mistakes=j.mistakes.includes(m)?j.mistakes.filter(x=>x!==m):[...j.mistakes.filter(x=>x!=="No Mistake"),m];}set({j});};
+window.cfgSlide=(key,val,p)=>{
+  const v=parseInt(val);
+  const el=document.getElementById(`cv_${key}`);
+  if(el)el.textContent=key==="maxTrades"?v:"₹"+v.toLocaleString("en-IN");
+  S.cfg={...S.cfg,[key]:v};
+};
+
+window.saveCfg=()=>{
+  sv('cfg',S.cfg);
+  const toast=document.createElement('div');
+  toast.style.cssText=`position:fixed;top:24px;left:50%;transform:translateX(-50%);background:var(--grn);color:#000;padding:12px 24px;border-radius:12px;font-weight:700;z-index:9999;font-family:'Syne',sans-serif;font-size:14px`;
+  toast.textContent="✓ Configuration saved!";document.body.appendChild(toast);
+  setTimeout(()=>{toast.remove();set({});},2000);
+};
 
 window.testAPI=async()=>{
   set({testStatus:"testing"});
   try{await dhanCall("/fundlimit");set({testStatus:"ok"});}
   catch(e){console.error(e);set({testStatus:"error"});}
 };
-window.clearData=()=>{if(!confirm("Clear all saved data?"))return;localStorage.clear();set({trades:[],fund:null});};
+window.clearData=()=>{if(!confirm("Clear all saved data?"))return;localStorage.clear();set({trades:[],fund:null,syncMsg:""});};
 
 render();
 </script>
